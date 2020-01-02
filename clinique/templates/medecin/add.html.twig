@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.matricule) }}
+    {{ form_row(form.prenom) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.telephone) }}
+    {{ form_row(form.date_naissance) }}
+    {{ form_row(form.services) }}
+    {{ form_row(form.specialite) }}
+        <button type="submit" class="btn btn-secondary">Enrégistrer</button>
+    {{ form_end(form) }}
+{% endblock  %}

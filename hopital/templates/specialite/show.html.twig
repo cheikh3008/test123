@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Specialite{% endblock %}
+
+{% block body %}
+<div class="mx-auto" style="width: 500px;">
+    <h1>Specialite</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="col">Identifiant</th>
+                <td>{{ specialite.id }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Nom specialite</th>
+                <td>{{ specialite.nomSpecialite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('specialite_index') }}" class="btn btn-secondary mb-2">Annuler</a>
+
+    <a href="{{ path('specialite_edit', {'id': specialite.id}) }}" class="btn btn-success mb-2">Modifier</a>
+
+    {{ include('specialite/_delete_form.html.twig') }}
+</div>>
+{% endblock %}
