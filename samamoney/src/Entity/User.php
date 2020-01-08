@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Entity;
-
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email")
+ * @IsGranted("ROLE_ADMIN")
  */
 class User implements UserInterface
 {
@@ -21,27 +25,32 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * 
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $nom;
 
