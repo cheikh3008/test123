@@ -1,0 +1,7 @@
+<div class="mx-auto" style="width: 600px;">
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success mb-2" >{{ button_label|default('Enrégistrer') }}</button>
+    <a href="{{ path('medecin_index') }}" class="btn btn-secondary mb-2 " >Annuler</a>
+{{ form_end(form) }}
+</div>

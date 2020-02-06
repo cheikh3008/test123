@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des medecins{% endblock %}
+
+{% block body %}
+ 
+  <div class="mx-auto" style="width: 1100px;">
+    <div class="starter-template">
+      <div class="card border-secondary mb-3" style="text-align: center;" style="max-width: 100rem;">
+          <div class="card-header" style="font-size: 2em;"> 
+            Liste des medecins  <span style="float:right"><a href="{{path('add.medecin')}}"  class="btn btn-success">Ajouter</a></span></div>
+            <div class="card-body">
+              <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Idenfiant</th>
+                      <th scope="col">Matricule</th>
+                      <th scope="col">Prenom</th>
+                      <th scope="col">Nom</th>
+                      <th scope="col">Telephone</th>
+                      <th scope="col">Date de naissance</th>
+                      <th scope="col">Service</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                      {% for medecins in medecin %}
+                      <tr>
+                          <td>{{ medecins.id }}</td>
+                          <td> {{ medecins.matricule }} </td>
+                          <td> {{ medecins.prenom }} </td>
+                          <td> {{ medecins.nom }} </td>
+                          <td> {{ medecins.telephone }} </td>
+                          <td> {{ medecins.dateNaissance | date('d-m-Y') }} </td>
+                          <td> {{ medecins.services }} </td>
+                          <td>  <a href=" {{ path('edit.medecin', {'id': medecins.id}) }} " class="btn btn-success">Modifier</a> 
+                            <a href=" {{ path('delete.medecin', {'id':medecins.id})}} "  class="btn btn-secondary"  onclick="return confirm('Etes vous sure de vouloir supprimer cet enrégistrement ?');">Supprimer </a>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+                  
+                </table> 
+              </div>
+            </div>
+          </div>
+        </div> 
+  </div>  
+
+{% endblock %}
