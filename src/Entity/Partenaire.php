@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
+ * @UniqueEntity("ninea" , message="ce ninea de compte email existe déja.")
  */
 class Partenaire
 {
@@ -22,26 +26,31 @@ class Partenaire
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $ninea;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $rc;
 
     /**
      * @ORM\Column(type="datetime")
+     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="partenaire")
+     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $userPartenaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire")
+     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $comptes;
 

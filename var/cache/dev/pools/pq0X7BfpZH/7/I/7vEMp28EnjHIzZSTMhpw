@@ -24,7 +24,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 false,
             ],
             'required' => [
-                false,
+                true,
             ],
             'identifier' => [
                 false,

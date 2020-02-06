@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ApiResource()
@@ -21,17 +23,20 @@ class Depot
     
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $montant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="depots")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $userDepot;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $createdAt;
 

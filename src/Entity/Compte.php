@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\CompteRepository")
+ * @UniqueEntity("numCompte" , message="ce numéro de compte  existe déja.")
  */
 class Compte
 {
@@ -22,33 +25,40 @@ class Compte
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $numCompte;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $solde;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * )
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $userCreateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $partenaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Depot", mappedBy="compte")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $depot;
 
