@@ -6,7 +6,7 @@
 use Symfony\Component\DependencyInjection\Dumper\Preloader;
 
 require dirname(__DIR__, 3).'/vendor/autoload.php';
-require __DIR__.'/ContainerZUyRkWK/srcApp_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerP5Iue6N/srcApp_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'App\Kernel';
@@ -26,11 +26,14 @@ $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver';
 $classes[] = 'Symfony\Component\HttpKernel\Controller\TraceableArgumentResolver';
 $classes[] = 'Symfony\Component\HttpKernel\Controller\ArgumentResolver';
 $classes[] = 'Symfony\Component\HttpFoundation\RequestStack';
+$classes[] = 'Symfony\Component\Config\ResourceCheckerConfigCacheFactory';
+$classes[] = 'Symfony\Component\HttpKernel\EventListener\LocaleAwareListener';
 $classes[] = 'Symfony\Component\HttpKernel\EventListener\SessionListener';
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
 $classes[] = 'Symfony\Component\Validator\Validator\ValidatorInterface';
 $classes[] = 'Symfony\Component\Validator\Validation';
 $classes[] = 'Symfony\Component\Validator\ContainerConstraintValidatorFactory';
+$classes[] = 'Symfony\Component\Validator\Util\LegacyTranslatorProxy';
 $classes[] = 'Symfony\Bridge\Doctrine\Validator\DoctrineInitializer';
 $classes[] = 'Symfony\Component\Validator\Mapping\Loader\PropertyInfoLoader';
 $classes[] = 'Symfony\Bridge\Doctrine\Validator\DoctrineLoader';
@@ -239,8 +242,10 @@ $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Security\ExpressionLanguage';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\EventListener\IsGrantedListener';
 $classes[] = 'Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter';
 $classes[] = 'Symfony\Component\HttpKernel\Log\Logger';
+$classes[] = 'Symfony\Bundle\FrameworkBundle\Translation\Translator';
+$classes[] = 'Symfony\Component\Translation\Formatter\MessageFormatter';
+$classes[] = 'Symfony\Component\Translation\IdentityTranslator';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Routing\Router';
-$classes[] = 'Symfony\Component\Config\ResourceCheckerConfigCacheFactory';
 $classes[] = 'Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher';
 $classes[] = 'Symfony\Component\EventDispatcher\EventDispatcher';
 $classes[] = 'Doctrine\Common\Annotations\CachedReader';
