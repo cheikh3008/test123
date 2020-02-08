@@ -430,6 +430,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\ContratRepository" class="App\Repository\ContratRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\DepotRepository" class="App\Repository\DepotRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -4126,7 +4130,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.Rcj14XW"/>
+      <argument type="service" id=".service_locator.dtw3hRl"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -5097,7 +5101,7 @@
       <tag name="console.command" command="server:run"/>
       <argument>/home/cheikhdieng/Bureau/money_transfer/public</argument>
       <argument>dev</argument>
-      <argument>/home/cheikhdieng/Bureau/money_transfer</argument>
+      <argument>/home/cheikhdieng/Bureau/money_transfer/var/cache</argument>
       <call method="setName">
         <argument>server:run</argument>
       </call>
@@ -5106,21 +5110,21 @@
       <tag name="console.command" command="server:start"/>
       <argument>/home/cheikhdieng/Bureau/money_transfer/public</argument>
       <argument>dev</argument>
-      <argument>/home/cheikhdieng/Bureau/money_transfer</argument>
+      <argument>/home/cheikhdieng/Bureau/money_transfer/var/cache</argument>
       <call method="setName">
         <argument>server:start</argument>
       </call>
     </service>
     <service id="web_server.command.server_stop" class="Symfony\Bundle\WebServerBundle\Command\ServerStopCommand" public="false">
       <tag name="console.command" command="server:stop"/>
-      <argument>/home/cheikhdieng/Bureau/money_transfer</argument>
+      <argument>/home/cheikhdieng/Bureau/money_transfer/var/cache</argument>
       <call method="setName">
         <argument>server:stop</argument>
       </call>
     </service>
     <service id="web_server.command.server_status" class="Symfony\Bundle\WebServerBundle\Command\ServerStatusCommand" public="false">
       <tag name="console.command" command="server:status"/>
-      <argument>/home/cheikhdieng/Bureau/money_transfer</argument>
+      <argument>/home/cheikhdieng/Bureau/money_transfer/var/cache</argument>
       <call method="setName">
         <argument>server:status</argument>
       </call>
@@ -5753,6 +5757,8 @@
     <service id=".abstract.instanceof.App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" class="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompteRepository" class="App\Repository\CompteRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CompteRepository" class="App\Repository\CompteRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContratRepository" class="App\Repository\ContratRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\ContratRepository" class="App\Repository\ContratRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\DepotRepository" class="App\Repository\DepotRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\DepotRepository" class="App\Repository\DepotRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PartenaireRepository" class="App\Repository\PartenaireRepository" autowire="true" abstract="true"/>
@@ -6066,10 +6072,11 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.Rcj14XW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.dtw3hRl" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\CompteRepository" type="service" id="App\Repository\CompteRepository"/>
+        <argument key="App\Repository\ContratRepository" type="service" id="App\Repository\ContratRepository"/>
         <argument key="App\Repository\DepotRepository" type="service" id="App\Repository\DepotRepository"/>
         <argument key="App\Repository\PartenaireRepository" type="service" id="App\Repository\PartenaireRepository"/>
         <argument key="App\Repository\RoleRepository" type="service" id="App\Repository\RoleRepository"/>

@@ -15,6 +15,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'App\\Entity\\User',
                     'App\\Entity\\Depot',
                     'App\\Entity\\Role',
+                    'App\\Entity\\Contrat',
                 ],
             ],
         ],

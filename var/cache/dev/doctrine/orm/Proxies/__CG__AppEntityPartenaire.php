@@ -66,10 +66,10 @@ class Partenaire extends \App\Entity\Partenaire implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'rc', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'createdAt', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'userPartenaire', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'rc', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'userPartenaire', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'contrat'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'rc', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'createdAt', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'userPartenaire', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'rc', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'userPartenaire', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'contrat'];
     }
 
     /**
@@ -238,28 +238,6 @@ class Partenaire extends \App\Entity\Partenaire implements \Doctrine\ORM\Proxy\P
     /**
      * {@inheritDoc}
      */
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedAt', []);
-
-        return parent::getCreatedAt();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setCreatedAt(\DateTimeInterface $createdAt): \App\Entity\Partenaire
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedAt', [$createdAt]);
-
-        return parent::setCreatedAt($createdAt);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getUserPartenaire(): \Doctrine\Common\Collections\Collection
     {
 
@@ -321,6 +299,28 @@ class Partenaire extends \App\Entity\Partenaire implements \Doctrine\ORM\Proxy\P
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCompte', [$compte]);
 
         return parent::removeCompte($compte);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getContrat(): ?\App\Entity\Contrat
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContrat', []);
+
+        return parent::getContrat();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContrat(?\App\Entity\Contrat $contrat): \App\Entity\Partenaire
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContrat', [$contrat]);
+
+        return parent::setContrat($contrat);
     }
 
 }

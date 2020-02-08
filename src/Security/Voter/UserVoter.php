@@ -35,7 +35,7 @@ class UserVoter extends Voter implements VoterInterface
             case 'POST_EDIT':   
                 if($userConnect->getRoles()[0]==="ROLE_ADMIN" && ($subject->getRoles()[0] === "ROLE_CAISSIER" || $subject->getRoles()[0] === "ROLE_PARTENAIRE")){
                     return true;
-                }else if($userConnect->getRoles()[0]==="ROLE_CAISSIER"){
+                }else if($userConnect->getRoles()[0]==="ROLE_CAISSIER" || $userConnect->getRoles()[0]==="ROLE_PARTENAIRE"){
                     return false;
                 }
                           

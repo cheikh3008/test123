@@ -36,11 +36,7 @@ class Partenaire
      */
     private $rc;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
-     */
-    private $createdAt;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="partenaire")
@@ -53,6 +49,11 @@ class Partenaire
      *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
      */
     private $comptes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Contrat", cascade={"persist", "remove"})
+     */
+    private $contrat;
 
     public function __construct()
     {
@@ -89,17 +90,7 @@ class Partenaire
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|User[]
@@ -159,6 +150,18 @@ class Partenaire
                 $compte->setPartenaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(?Contrat $contrat): self
+    {
+        $this->contrat = $contrat;
 
         return $this;
     }

@@ -5,17 +5,18 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Depot;
 use App\Entity\Compte;
+use App\Entity\Contrat;
 use App\Entity\Partenaire;
-use App\Repository\PartenaireRepository;
 use App\Repository\RoleRepository;
+use App\Repository\PartenaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class NewCompteController extends AbstractController
@@ -54,6 +55,7 @@ class NewCompteController extends AbstractController
                 #### Creation de compte Partenaire ####
 
                 $userCreateur = $this->tokenStorage->getToken()->getUser();
+                dd($userCreateur);
                 $compte->setNumCompte($numCompte)
                     ->setSolde(0)
                     ->setCreatedAt($dateJours)
@@ -83,15 +85,19 @@ class NewCompteController extends AbstractController
 
             }else{
                 $partenaire = new Partenaire();
-
+                $contrat = new Contrat();
                 #### Creation de  Partenaire ####
         
                 $partenaire->setNinea($values->ninea)
-                    ->setCreatedAt($dateJours)
-                    ->setRc($values->rc);
+                    ->setRc($values->rc)
+                    ->setContrat($contrat);
                 $manager->persist($partenaire);
                 
-                
+                #### Creation de contrat Partenaire ####
+                $contrat->setTermes("Un contrat de partenariat est un document juridique qui définit la structure légale de l'entité du partenariat. Il décrit tous les termes, conditions, responsabilités, les parts de propriété, profits et pertes dans l'entreprise, et constitue les règles régissant l'activité commerciale.")
+                        ->setCreatedAt($dateJours);
+                $manager->persist($contrat);
+
                 $user->setEmail($values->email)
                     ->setPassword($passwordEncode->encodePassword($user, $values->password))
                     ->setRole($role)
