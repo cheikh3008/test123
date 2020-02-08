@@ -55,7 +55,7 @@ class NewCompteController extends AbstractController
                 #### Creation de compte Partenaire ####
 
                 $userCreateur = $this->tokenStorage->getToken()->getUser();
-                dd($userCreateur);
+             
                 $compte->setNumCompte($numCompte)
                     ->setSolde(0)
                     ->setCreatedAt($dateJours)

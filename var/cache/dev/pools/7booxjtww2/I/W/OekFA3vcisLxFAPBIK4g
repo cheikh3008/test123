@@ -14,7 +14,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                     'post' => [
                         'controller' => 'App\\Controller\\CreateMediaObjectAction',
                         'deserialize' => false,
-                        'access_control' => 'is_granted(\'ROLE_USER\')',
+                        'access_control' => 'is_granted(\'ROLE_ADMIN\')',
                         'validation_groups' => [
                             'Default',
                             'media_object_create',

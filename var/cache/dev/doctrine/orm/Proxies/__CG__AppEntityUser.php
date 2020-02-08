@@ -546,4 +546,26 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::removeDepot($depot);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getImage(): ?\App\Entity\MediaObject
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImage', []);
+
+        return parent::getImage();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setImage(?\App\Entity\MediaObject $image): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setImage', [$image]);
+
+        return parent::setImage($image);
+    }
+
 }
