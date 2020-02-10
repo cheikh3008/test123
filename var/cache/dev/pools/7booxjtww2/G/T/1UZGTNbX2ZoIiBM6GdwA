@@ -10,7 +10,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
     [
         'stdClass' => [
             'targetEntity' => [
-                'App\\Entity\\MediaObject',
+                'MediaObject',
             ],
             'iri' => [
                 2 => 'http://schema.org/image',

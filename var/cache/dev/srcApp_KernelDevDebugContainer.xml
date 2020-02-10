@@ -20,7 +20,6 @@
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="DoctrineFixturesBundle">Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle</parameter>
       <parameter key="LexikJWTAuthenticationBundle">Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle</parameter>
-      <parameter key="VichUploaderBundle">Vich\UploaderBundle\VichUploaderBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
@@ -68,10 +67,6 @@
         <parameter key="path">/home/cheikhdieng/Bureau/money_transfer/vendor/lexik/jwt-authentication-bundle</parameter>
         <parameter key="namespace">Lexik\Bundle\JWTAuthenticationBundle</parameter>
       </parameter>
-      <parameter key="VichUploaderBundle" type="collection">
-        <parameter key="path">/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle</parameter>
-        <parameter key="namespace">Vich\UploaderBundle</parameter>
-      </parameter>
       <parameter key="SensioFrameworkExtraBundle" type="collection">
         <parameter key="path">/home/cheikhdieng/Bureau/money_transfer/vendor/sensio/framework-extra-bundle/src</parameter>
         <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
@@ -100,8 +95,6 @@
     </parameter>
     <parameter key="session.save_path">/home/cheikhdieng/Bureau/money_transfer/var/cache/dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
-    <parameter key="form.type_extension.csrf.enabled">true</parameter>
-    <parameter key="form.type_extension.csrf.field_name">_token</parameter>
     <parameter key="asset.request_context.base_path"></parameter>
     <parameter key="asset.request_context.secure">false</parameter>
     <parameter key="validator.mapping.cache.prefix"></parameter>
@@ -123,7 +116,6 @@
     <parameter key="serializer.mapping.cache.prefix"></parameter>
     <parameter key="twig.exception_listener.controller">null</parameter>
     <parameter key="twig.form.resources" type="collection">
-      <parameter>@VichUploader/Form/fields.html.twig</parameter>
       <parameter>form_div_layout.html.twig</parameter>
     </parameter>
     <parameter key="twig.default_path">/home/cheikhdieng/Bureau/money_transfer/templates</parameter>
@@ -364,26 +356,6 @@
     <parameter key="lexik_jwt_authentication.user_id_claim">username</parameter>
     <parameter key="lexik_jwt_authentication.encoder.signature_algorithm">RS256</parameter>
     <parameter key="lexik_jwt_authentication.encoder.crypto_engine">openssl</parameter>
-    <parameter key="vich_uploader.default_filename_attribute_suffix">_name</parameter>
-    <parameter key="vich_uploader.mappings" type="collection">
-      <parameter key="media_object" type="collection">
-        <parameter key="uri_prefix">/media</parameter>
-        <parameter key="upload_destination">/home/cheikhdieng/Bureau/money_transfer/public/media</parameter>
-        <parameter key="namer" type="collection">
-          <parameter key="service">Vich\UploaderBundle\Naming\OrignameNamer.media_object</parameter>
-          <parameter key="options" type="collection"/>
-        </parameter>
-        <parameter key="directory_namer" type="collection">
-          <parameter key="service">null</parameter>
-          <parameter key="options">null</parameter>
-        </parameter>
-        <parameter key="delete_on_remove">true</parameter>
-        <parameter key="delete_on_update">true</parameter>
-        <parameter key="inject_on_load">false</parameter>
-        <parameter key="db_driver">orm</parameter>
-      </parameter>
-    </parameter>
-    <parameter key="vich_uploader.file_injector.class">Vich\UploaderBundle\Injector\FileInjector</parameter>
     <parameter key="console.command.ids" type="collection">
       <parameter>console.command.public_alias.api_platform.json_schema.json_schema_generate_command</parameter>
       <parameter>console.command.public_alias.api_platform.swagger.command.swagger_command</parameter>
@@ -393,9 +365,6 @@
     <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
     <service id="kernel" class="App\Kernel" public="true" synthetic="true">
       <tag name="routing.route_loader"/>
-    </service>
-    <service id="App\Controller\CreateMediaObjectAction" class="App\Controller\CreateMediaObjectAction" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
     </service>
     <service id="App\Controller\DepotController" class="App\Controller\DepotController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -421,10 +390,6 @@
       <tag name="api_platform.data_persister"/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
-    </service>
-    <service id="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" class="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" autowire="true" autoconfigure="true">
-      <tag name="kernel.event_subscriber"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
     </service>
     <service id="App\Repository\CompteRepository" class="App\Repository\CompteRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -557,13 +522,11 @@
         <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
         <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
         <argument key="cache.property_info" type="service" id="cache.property_info" on-invalid="ignore_uninitialized"/>
-        <argument key="form.choice_list_factory.cached" type="service" id="form.choice_list_factory.cached" on-invalid="ignore_uninitialized"/>
         <argument key="debug.stopwatch" type="service" id="debug.stopwatch" on-invalid="ignore_uninitialized"/>
         <argument key="debug.event_dispatcher" type="service" id="debug.event_dispatcher" on-invalid="ignore_uninitialized"/>
         <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore_uninitialized"/>
         <argument key="cache.security_expression_language" type="service" id="cache.security_expression_language" on-invalid="ignore_uninitialized"/>
         <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore_uninitialized"/>
-        <argument key="form.type.entity" type="service" id="form.type.entity" on-invalid="ignore_uninitialized"/>
         <argument key="api_platform.cache.route_name_resolver" type="service" id="api_platform.cache.route_name_resolver" on-invalid="ignore_uninitialized"/>
         <argument key="api_platform.cache.identifiers_extractor" type="service" id="api_platform.cache.identifiers_extractor" on-invalid="ignore_uninitialized"/>
         <argument key="api_platform.cache.subresource_operation_factory" type="service" id="api_platform.cache.subresource_operation_factory" on-invalid="ignore_uninitialized"/>
@@ -589,9 +552,6 @@
         <argument key="cache.property_info" type="collection">
           <argument>reset</argument>
         </argument>
-        <argument key="form.choice_list_factory.cached" type="collection">
-          <argument>reset</argument>
-        </argument>
         <argument key="debug.stopwatch" type="collection">
           <argument>reset</argument>
         </argument>
@@ -606,9 +566,6 @@
           <argument>reset</argument>
         </argument>
         <argument key="doctrine" type="collection">
-          <argument>reset</argument>
-        </argument>
-        <argument key="form.type.entity" type="collection">
           <argument>reset</argument>
         </argument>
         <argument key="api_platform.cache.route_name_resolver" type="collection">
@@ -820,12 +777,9 @@
       <argument>/home/cheikhdieng/Bureau/money_transfer/templates</argument>
       <argument type="collection">
         <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations</argument>
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations</argument>
         <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations</argument>
       </argument>
-      <argument type="collection">
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bridge/Resources/views/Form</argument>
-      </argument>
+      <argument type="collection"/>
       <call method="setName">
         <argument>debug:translation</argument>
       </call>
@@ -840,12 +794,9 @@
       <argument>/home/cheikhdieng/Bureau/money_transfer/templates</argument>
       <argument type="collection">
         <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations</argument>
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations</argument>
         <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations</argument>
       </argument>
-      <argument type="collection">
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bridge/Resources/views/Form</argument>
-      </argument>
+      <argument type="collection"/>
       <call method="setName">
         <argument>translation:update</argument>
       </call>
@@ -860,40 +811,6 @@
       <tag name="console.command" command="lint:yaml"/>
       <call method="setName">
         <argument>lint:yaml</argument>
-      </call>
-    </service>
-    <service id="console.command.form_debug" class="Symfony\Component\Form\Command\DebugCommand" public="false">
-      <tag name="console.command" command="debug:form"/>
-      <argument type="service" id="form.registry"/>
-      <argument type="collection">
-        <argument>Symfony\Component\Form\Extension\Core\Type</argument>
-        <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
-        <argument>Vich\UploaderBundle\Form\Type</argument>
-      </argument>
-      <argument type="collection">
-        <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
-        <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
-        <argument>Symfony\Component\Form\Extension\Core\Type\FileType</argument>
-        <argument>Symfony\Bridge\Doctrine\Form\Type\EntityType</argument>
-        <argument>Vich\UploaderBundle\Form\Type\VichFileType</argument>
-        <argument>Vich\UploaderBundle\Form\Type\VichImageType</argument>
-      </argument>
-      <argument type="collection">
-        <argument>Symfony\Component\Form\Extension\Core\Type\TransformationFailureExtension</argument>
-        <argument>Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension</argument>
-        <argument>Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension</argument>
-        <argument>Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension</argument>
-        <argument>Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension</argument>
-        <argument>Symfony\Component\Form\Extension\Validator\Type\UploadValidatorExtension</argument>
-        <argument>Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension</argument>
-      </argument>
-      <argument type="collection">
-        <argument>Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser</argument>
-        <argument>Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser</argument>
-      </argument>
-      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
-      <call method="setName">
-        <argument>debug:form</argument>
       </call>
     </service>
     <service id="console.command.secrets_set" class="Symfony\Bundle\FrameworkBundle\Command\SecretsSetCommand" public="false">
@@ -1230,101 +1147,6 @@
     <service id="twig.extension.security_csrf" class="Symfony\Bridge\Twig\Extension\CsrfExtension" public="false">
       <tag name="twig.extension"/>
     </service>
-    <service id="form.resolved_type_factory" class="Symfony\Component\Form\ResolvedFormTypeFactory" public="false"/>
-    <service id="form.registry" class="Symfony\Component\Form\FormRegistry" public="false">
-      <argument type="collection">
-        <argument type="service" id="form.extension"/>
-      </argument>
-      <argument type="service" id="form.resolved_type_factory"/>
-    </service>
-    <service id="form.factory" class="Symfony\Component\Form\FormFactory" public="true">
-      <argument type="service" id="form.registry"/>
-    </service>
-    <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.ShwN2GR"/>
-      <argument type="collection">
-        <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
-          <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
-          <argument type="service" id="form.type_extension.form.http_foundation"/>
-          <argument type="service" id="form.type_extension.form.validator"/>
-          <argument type="service" id="form.type_extension.upload.validator"/>
-          <argument type="service" id="form.type_extension.csrf"/>
-        </argument>
-        <argument key="Symfony\Component\Form\Extension\Core\Type\RepeatedType" type="iterator">
-          <argument type="service" id="form.type_extension.repeated.validator"/>
-        </argument>
-        <argument key="Symfony\Component\Form\Extension\Core\Type\SubmitType" type="iterator">
-          <argument type="service" id="form.type_extension.submit.validator"/>
-        </argument>
-      </argument>
-      <argument type="iterator">
-        <argument type="service" id="form.type_guesser.validator"/>
-        <argument type="service" id="form.type_guesser.doctrine"/>
-      </argument>
-    </service>
-    <service id="form.type_guesser.validator" class="Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser" public="false">
-      <tag name="form.type_guesser"/>
-      <argument type="service" id="validator"/>
-    </service>
-    <service id="form.choice_list_factory.default" class="Symfony\Component\Form\ChoiceList\Factory\DefaultChoiceListFactory" public="false"/>
-    <service id="form.choice_list_factory.property_access" class="Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator" public="false">
-      <argument type="service" id="form.choice_list_factory.default"/>
-      <argument type="service" id="property_accessor"/>
-    </service>
-    <service id="form.choice_list_factory.cached" class="Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator" public="false">
-      <tag name="kernel.reset" method="reset"/>
-      <argument type="service" id="form.choice_list_factory.property_access"/>
-    </service>
-    <service id="form.type.form" class="Symfony\Component\Form\Extension\Core\Type\FormType" public="false">
-      <tag name="form.type"/>
-      <argument type="service" id="property_accessor"/>
-    </service>
-    <service id="form.type.choice" class="Symfony\Component\Form\Extension\Core\Type\ChoiceType" public="false">
-      <tag name="form.type"/>
-      <argument type="service" id="form.choice_list_factory.cached"/>
-    </service>
-    <service id="form.type.file" class="Symfony\Component\Form\Extension\Core\Type\FileType" public="true">
-      <tag name="form.type"/>
-      <argument type="service" id="translator.default" on-invalid="ignore"/>
-    </service>
-    <service id="form.type_extension.form.transformation_failure_handling" class="Symfony\Component\Form\Extension\Core\Type\TransformationFailureExtension" public="false">
-      <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\FormType" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType"/>
-      <argument type="service" id="translator.default" on-invalid="ignore"/>
-    </service>
-    <service id="form.type_extension.form.http_foundation" class="Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension" public="false">
-      <tag name="form.type_extension"/>
-      <argument type="service" id="form.type_extension.form.request_handler"/>
-    </service>
-    <service id="form.type_extension.form.request_handler" class="Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationRequestHandler" public="false">
-      <argument type="service" id="form.server_params"/>
-    </service>
-    <service id="form.server_params" class="Symfony\Component\Form\Util\ServerParams" public="false">
-      <argument type="service" id="request_stack"/>
-    </service>
-    <service id="form.type_extension.form.validator" class="Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension" public="false">
-      <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\FormType" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType"/>
-      <argument type="service" id="validator"/>
-    </service>
-    <service id="form.type_extension.repeated.validator" class="Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension" public="false">
-      <tag name="form.type_extension"/>
-    </service>
-    <service id="form.type_extension.submit.validator" class="Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension" public="false">
-      <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\SubmitType" extended-type="Symfony\Component\Form\Extension\Core\Type\SubmitType"/>
-    </service>
-    <service id="form.type_extension.upload.validator" class="Symfony\Component\Form\Extension\Validator\Type\UploadValidatorExtension" public="false">
-      <tag name="form.type_extension"/>
-      <argument type="service" id="translator.default"/>
-      <argument>validators</argument>
-    </service>
-    <service id="form.type_extension.csrf" class="Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension" public="false">
-      <tag name="form.type_extension"/>
-      <argument type="service" id="security.csrf.token_manager"/>
-      <argument>true</argument>
-      <argument>_token</argument>
-      <argument type="service" id="translator.default" on-invalid="null"/>
-      <argument>validators</argument>
-      <argument type="service" id="form.server_params"/>
-    </service>
     <service id="assets.packages" class="Symfony\Component\Asset\Packages" public="false">
       <argument type="service" id="assets._default_package"/>
       <argument type="collection"/>
@@ -1376,11 +1198,6 @@
       </call>
       <call method="setTranslationDomain">
         <argument>validators</argument>
-      </call>
-      <call method="addXmlMappings">
-        <argument type="collection">
-          <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/config/validation.xml</argument>
-        </argument>
       </call>
       <call method="enableAnnotationMapping">
         <argument type="service" id="annotations.cached_reader"/>
@@ -1490,230 +1307,171 @@
           </argument>
           <argument key="ar" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.ar.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.ar.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.ar.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.ar.yml</argument>
           </argument>
           <argument key="az" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.az.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.az.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.az.xlf</argument>
           </argument>
           <argument key="be" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.be.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.be.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.be.xlf</argument>
           </argument>
           <argument key="bg" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.bg.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.bg.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.bg.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.bg.yml</argument>
           </argument>
           <argument key="ca" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.ca.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.ca.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.ca.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.ca.yml</argument>
           </argument>
           <argument key="cs" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.cs.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.cs.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.cs.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.cs.yml</argument>
           </argument>
           <argument key="cy" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.cy.xlf</argument>
           </argument>
           <argument key="da" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.da.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.da.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.da.xlf</argument>
           </argument>
           <argument key="de" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.de.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.de.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.de.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.de.yml</argument>
           </argument>
           <argument key="el" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.el.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.el.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.el.xlf</argument>
           </argument>
           <argument key="en" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.en.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.en.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.en.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.en.yml</argument>
           </argument>
           <argument key="es" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.es.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.es.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.es.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.es.yml</argument>
           </argument>
           <argument key="et" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.et.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.et.xlf</argument>
           </argument>
           <argument key="eu" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.eu.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.eu.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.eu.xlf</argument>
           </argument>
           <argument key="fa" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.fa.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.fa.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.fa.xlf</argument>
           </argument>
           <argument key="fi" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.fi.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.fi.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.fi.yml</argument>
           </argument>
           <argument key="fr" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.fr.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.fr.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.fr.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.fr.yml</argument>
           </argument>
           <argument key="gl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.gl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.gl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.gl.xlf</argument>
           </argument>
           <argument key="he" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.he.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.he.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.he.xlf</argument>
           </argument>
           <argument key="hr" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.hr.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.hr.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.hr.xlf</argument>
           </argument>
           <argument key="hu" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.hu.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.hu.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.hu.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.hu.yml</argument>
           </argument>
           <argument key="hy" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.hy.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.hy.xlf</argument>
           </argument>
           <argument key="id" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.id.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.id.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.id.xlf</argument>
           </argument>
           <argument key="it" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.it.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.it.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.it.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.it.yml</argument>
           </argument>
           <argument key="ja" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.ja.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.ja.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.ja.xlf</argument>
           </argument>
           <argument key="lb" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.lb.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.lb.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.lb.xlf</argument>
           </argument>
           <argument key="lt" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.lt.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.lt.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.lt.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.lt.yml</argument>
           </argument>
           <argument key="lv" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.lv.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.lv.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.lv.xlf</argument>
           </argument>
           <argument key="mn" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.mn.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.mn.xlf</argument>
           </argument>
           <argument key="nb" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.nb.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.nb.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.nb.xlf</argument>
           </argument>
           <argument key="nl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.nl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.nl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.nl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.nl.yml</argument>
           </argument>
           <argument key="nn" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.nn.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.nn.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.nn.xlf</argument>
           </argument>
           <argument key="no" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.no.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.no.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.no.xlf</argument>
           </argument>
           <argument key="pl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.pl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.pl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.pl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.pl.yml</argument>
           </argument>
           <argument key="pt" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.pt.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.pt.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.pt.yml</argument>
           </argument>
           <argument key="pt_BR" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.pt_BR.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.pt_BR.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.pt_BR.xlf</argument>
           </argument>
           <argument key="ro" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.ro.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.ro.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.ro.xlf</argument>
           </argument>
           <argument key="ru" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.ru.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.ru.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.ru.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.ru.yml</argument>
           </argument>
           <argument key="sk" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sk.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.sk.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.sk.xlf</argument>
           </argument>
           <argument key="sl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.sl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.sl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.sl.yml</argument>
           </argument>
           <argument key="sq" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sq.xlf</argument>
           </argument>
           <argument key="sr_Cyrl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sr_Cyrl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.sr_Cyrl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.sr_Cyrl.xlf</argument>
           </argument>
           <argument key="sr_Latn" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sr_Latn.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.sr_Latn.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.sr_Latn.xlf</argument>
           </argument>
           <argument key="sv" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.sv.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.sv.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.sv.xlf</argument>
           </argument>
           <argument key="th" type="collection">
@@ -1722,29 +1480,22 @@
           </argument>
           <argument key="tl" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.tl.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.tl.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.tl.xlf</argument>
           </argument>
           <argument key="tr" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.tr.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.tr.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.tr.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.tr.yml</argument>
           </argument>
           <argument key="uk" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.uk.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.uk.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.uk.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.uk.yml</argument>
           </argument>
           <argument key="vi" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.vi.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.vi.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.vi.xlf</argument>
           </argument>
           <argument key="zh_CN" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations/validators.zh_CN.xlf</argument>
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations/validators.zh_CN.xlf</argument>
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.zh_CN.xlf</argument>
           </argument>
           <argument key="zh_TW" type="collection">
@@ -1753,15 +1504,10 @@
           <argument key="pt_PT" type="collection">
             <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations/security.pt_PT.xlf</argument>
           </argument>
-          <argument key="vn" type="collection">
-            <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations/VichUploaderBundle.vn.yml</argument>
-          </argument>
         </argument>
         <argument key="scanned_directories" type="collection">
           <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/validator/Resources/translations</argument>
-          <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/form/Resources/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/security-core/Resources/translations</argument>
-          <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/FrameworkBundle/translations</argument>
@@ -1785,7 +1531,6 @@
           <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/DoctrineFixturesBundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/lexik/jwt-authentication-bundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/LexikJWTAuthenticationBundle/translations</argument>
-          <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/VichUploaderBundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/sensio/framework-extra-bundle/src/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/SensioFrameworkExtraBundle/translations</argument>
           <argument>/home/cheikhdieng/Bureau/money_transfer/src/Resources/translations</argument>
@@ -1793,9 +1538,7 @@
         <argument key="cache_vary" type="collection">
           <argument key="scanned_directories" type="collection">
             <argument>vendor/symfony/validator/Resources/translations</argument>
-            <argument>vendor/symfony/form/Resources/translations</argument>
             <argument>vendor/symfony/security-core/Resources/translations</argument>
-            <argument>vendor/vich/uploader-bundle/translations</argument>
             <argument>translations</argument>
             <argument>vendor/symfony/framework-bundle/translations</argument>
             <argument>src/Resources/FrameworkBundle/translations</argument>
@@ -1819,7 +1562,6 @@
             <argument>src/Resources/DoctrineFixturesBundle/translations</argument>
             <argument>vendor/lexik/jwt-authentication-bundle/translations</argument>
             <argument>src/Resources/LexikJWTAuthenticationBundle/translations</argument>
-            <argument>src/Resources/VichUploaderBundle/translations</argument>
             <argument>vendor/sensio/framework-extra-bundle/src/translations</argument>
             <argument>src/Resources/SensioFrameworkExtraBundle/translations</argument>
             <argument>src/Resources/translations</argument>
@@ -2190,14 +1932,6 @@
           <argument>onSecurityPostDenormalize</argument>
         </argument>
         <argument>1</argument>
-      </call>
-      <call method="addListener">
-        <argument>kernel.view</argument>
-        <argument type="collection">
-          <argument type="service" id="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber"/>
-          <argument>onPreSerialize</argument>
-        </argument>
-        <argument>17</argument>
       </call>
       <call method="addListener">
         <argument>kernel.response</argument>
@@ -2952,9 +2686,6 @@
         <argument type="service" id="twig.extension.weblink"/>
       </call>
       <call method="addExtension">
-        <argument type="service" id="twig.extension.form"/>
-      </call>
-      <call method="addExtension">
         <argument type="service" id="twig.extension.logout_url"/>
       </call>
       <call method="addExtension">
@@ -2965,9 +2696,6 @@
       </call>
       <call method="addExtension">
         <argument type="service" id="doctrine.twig.doctrine_extension"/>
-      </call>
-      <call method="addExtension">
-        <argument type="service" id="vich_uploader.twig.extension.uploader"/>
       </call>
       <call method="addGlobal">
         <argument>app</argument>
@@ -2995,9 +2723,7 @@
     <service id="twig.template_iterator" class="Symfony\Bundle\TwigBundle\TemplateIterator" public="false">
       <argument type="service" id="kernel"/>
       <argument>/home/cheikhdieng/Bureau/money_transfer/src</argument>
-      <argument type="collection">
-        <argument key="/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bridge/Resources/views/Form">null</argument>
-      </argument>
+      <argument type="collection"/>
       <argument>/home/cheikhdieng/Bureau/money_transfer/templates</argument>
     </service>
     <service id="twig.template_cache_warmer" class="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer" public="false">
@@ -3051,18 +2777,7 @@
         <argument>!ApiPlatform</argument>
       </call>
       <call method="addPath">
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/templates</argument>
-        <argument>VichUploader</argument>
-      </call>
-      <call method="addPath">
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/templates</argument>
-        <argument>!VichUploader</argument>
-      </call>
-      <call method="addPath">
         <argument>/home/cheikhdieng/Bureau/money_transfer/templates</argument>
-      </call>
-      <call method="addPath">
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bridge/Resources/views/Form</argument>
       </call>
     </service>
     <service id="twig.loader.chain" class="Twig\Loader\ChainLoader" public="false"/>
@@ -3147,28 +2862,12 @@
       <argument>,</argument>
     </service>
     <service id="twig.runtime_loader" class="Twig\RuntimeLoader\ContainerRuntimeLoader" public="false">
-      <argument type="service" id=".service_locator.7YWluy."/>
+      <argument type="service" id=".service_locator.0rjg.qe"/>
     </service>
     <service id="twig.error_renderer.html" class="Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer" public="false">
       <argument type="service" id="twig"/>
       <argument type="service" id="error_handler.error_renderer.html"/>
       <argument type="service" id=".1_~rvKDn5b"/>
-    </service>
-    <service id="twig.extension.form" class="Symfony\Bridge\Twig\Extension\FormExtension" public="false">
-      <tag name="twig.extension"/>
-      <argument type="collection">
-        <argument type="service" id="service_container"/>
-        <argument>twig.form.renderer</argument>
-      </argument>
-    </service>
-    <service id="twig.form.engine" class="Symfony\Bridge\Twig\Form\TwigRendererEngine" public="false">
-      <argument>%twig.form.resources%</argument>
-      <argument type="service" id="twig"/>
-    </service>
-    <service id="twig.form.renderer" class="Symfony\Component\Form\FormRenderer" public="false">
-      <tag name="twig.runtime"/>
-      <argument type="service" id="twig.form.engine"/>
-      <argument type="service" id="security.csrf.token_manager" on-invalid="null"/>
     </service>
     <service id="twig.command.debug" class="Symfony\Bridge\Twig\Command\DebugCommand" public="false">
       <tag name="console.command" command="debug:twig"/>
@@ -4077,15 +3776,6 @@
     </service>
     <service id="doctrine.dbal.default_connection.event_manager" class="Symfony\Bridge\Doctrine\ContainerAwareEventManager" public="false">
       <argument type="service" id=".service_locator.bpvU51K"/>
-      <call method="addEventSubscriber">
-        <argument type="service" id="vich_uploader.listener.clean.media_object"/>
-      </call>
-      <call method="addEventSubscriber">
-        <argument type="service" id="vich_uploader.listener.remove.media_object"/>
-      </call>
-      <call method="addEventSubscriber">
-        <argument type="service" id="vich_uploader.listener.upload.media_object"/>
-      </call>
       <call method="addEventListener">
         <argument type="collection">
           <argument>loadClassMetadata</argument>
@@ -4122,7 +3812,6 @@
     </service>
     <service id="form.type.entity" class="Symfony\Bridge\Doctrine\Form\Type\EntityType">
       <tag name="form.type" alias="entity"/>
-      <tag name="kernel.reset" method="reset"/>
       <argument type="service" id="doctrine"/>
     </service>
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" public="false" abstract="true"/>
@@ -4252,7 +3941,6 @@
       <call method="setEntityNamespaces">
         <argument type="collection">
           <argument key="App">App\Entity</argument>
-          <argument key="VichUploaderBundle">Vich\UploaderBundle\Entity</argument>
         </argument>
       </call>
       <call method="setMetadataCacheImpl">
@@ -4299,17 +3987,12 @@
       <argument type="service" id="annotations.cached_reader"/>
       <argument type="collection">
         <argument>/home/cheikhdieng/Bureau/money_transfer/src/Entity</argument>
-        <argument>/home/cheikhdieng/Bureau/money_transfer/vendor/vich/uploader-bundle/src/Entity</argument>
       </argument>
     </service>
     <service id="doctrine.orm.default_metadata_driver" class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false">
       <call method="addDriver">
         <argument type="service" id="doctrine.orm.default_annotation_metadata_driver"/>
         <argument>App\Entity</argument>
-      </call>
-      <call method="addDriver">
-        <argument type="service" id="doctrine.orm.default_annotation_metadata_driver"/>
-        <argument>Vich\UploaderBundle\Entity</argument>
       </call>
     </service>
     <service id="cache.doctrine.orm.default.metadata" class="Symfony\Component\Cache\Adapter\ArrayAdapter">
@@ -5439,239 +5122,6 @@
     <service id="lexik_jwt_authentication.security.jwt_user_provider" class="Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserProvider" public="false">
       <argument></argument>
     </service>
-    <service id="Vich\UploaderBundle\Naming\OrignameNamer.media_object" class="Vich\UploaderBundle\Naming\OrignameNamer" public="true">
-      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
-    </service>
-    <service id="vich_uploader.adapter.mongodb" class="Vich\UploaderBundle\Adapter\ODM\MongoDB\MongoDBAdapter" public="false"/>
-    <service id="vich_uploader.adapter.orm" class="Vich\UploaderBundle\Adapter\ORM\DoctrineORMAdapter" public="false"/>
-    <service id="vich_uploader.adapter.phpcr" class="Vich\UploaderBundle\Adapter\PHPCR\PHPCRAdapter" public="false"/>
-    <service id="vich_uploader.listener.doctrine.base" public="false" abstract="true">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.inject.orm" class="Vich\UploaderBundle\EventListener\Doctrine\InjectListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.upload.orm" class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.clean.orm" class="Vich\UploaderBundle\EventListener\Doctrine\CleanListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.remove.orm" class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.inject.mongodb" class="Vich\UploaderBundle\EventListener\Doctrine\InjectListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.upload.mongodb" class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.clean.mongodb" class="Vich\UploaderBundle\EventListener\Doctrine\CleanListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.remove.mongodb" class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.inject.phpcr" class="Vich\UploaderBundle\EventListener\Doctrine\InjectListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.upload.phpcr" class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.clean.phpcr" class="Vich\UploaderBundle\EventListener\Doctrine\CleanListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.remove.phpcr" class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
-      <argument></argument>
-      <argument></argument>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.storage.file_system" class="Vich\UploaderBundle\Storage\FileSystemStorage" public="false">
-      <argument type="service" id="vich_uploader.property_mapping_factory"/>
-    </service>
-    <service id="vich_uploader.file_injector" class="Vich\UploaderBundle\Injector\FileInjector" public="false">
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-    </service>
-    <service id="vich_uploader.metadata.file_locator" class="Metadata\Driver\FileLocator" public="false">
-      <argument type="collection"/>
-    </service>
-    <service id="vich_uploader.metadata_driver.annotation" class="Vich\UploaderBundle\Metadata\Driver\AnnotationDriver" public="false">
-      <argument type="service" id="annotations.cached_reader"/>
-    </service>
-    <service id="vich_uploader.metadata_driver.xml" class="Vich\UploaderBundle\Metadata\Driver\XmlDriver" public="false">
-      <argument type="service" id="vich_uploader.metadata.file_locator"/>
-    </service>
-    <service id="vich_uploader.metadata_driver.yaml" class="Vich\UploaderBundle\Metadata\Driver\YamlDriver" public="false">
-      <argument type="service" id="vich_uploader.metadata.file_locator"/>
-    </service>
-    <service id="vich_uploader.metadata_driver.chain" class="Metadata\Driver\DriverChain" public="false">
-      <argument type="collection">
-        <argument type="service" id="vich_uploader.metadata_driver.xml"/>
-        <argument type="service" id="vich_uploader.metadata_driver.annotation"/>
-        <argument type="service" id="vich_uploader.metadata_driver.yaml"/>
-      </argument>
-    </service>
-    <service id="vich_uploader.metadata.cache.file_cache" class="Metadata\Cache\FileCache" public="false">
-      <argument>/home/cheikhdieng/Bureau/money_transfer/var/cache/dev/vich_uploader</argument>
-    </service>
-    <service id="vich_uploader.metadata_factory" class="Metadata\MetadataFactory" public="false">
-      <argument type="service" id="vich_uploader.metadata_driver.chain"/>
-      <argument>Metadata\ClassHierarchyMetadata</argument>
-      <argument>true</argument>
-      <call method="setCache">
-        <argument type="service" id="vich_uploader.metadata.cache.file_cache" on-invalid="ignore"/>
-      </call>
-    </service>
-    <service id="vich_uploader.metadata_reader" class="Vich\UploaderBundle\Metadata\MetadataReader" public="false">
-      <argument type="service" id="vich_uploader.metadata_factory"/>
-    </service>
-    <service id="vich_uploader.property_mapping_factory" class="Vich\UploaderBundle\Mapping\PropertyMappingFactory" public="false">
-      <argument type="service" id="service_container"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument>%vich_uploader.mappings%</argument>
-      <argument>_name</argument>
-    </service>
-    <service id="Vich\UploaderBundle\Naming\UniqidNamer" class="Vich\UploaderBundle\Naming\UniqidNamer" public="true"/>
-    <service id="Vich\UploaderBundle\Naming\PropertyNamer" class="Vich\UploaderBundle\Naming\PropertyNamer" public="true">
-      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
-    </service>
-    <service id="Vich\UploaderBundle\Naming\OrignameNamer" class="Vich\UploaderBundle\Naming\OrignameNamer" public="true">
-      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
-    </service>
-    <service id="Vich\UploaderBundle\Naming\HashNamer" class="Vich\UploaderBundle\Naming\HashNamer" public="true"/>
-    <service id="Vich\UploaderBundle\Naming\Base64Namer" class="Vich\UploaderBundle\Naming\Base64Namer" public="true"/>
-    <service id="Vich\UploaderBundle\Naming\SubdirDirectoryNamer" class="Vich\UploaderBundle\Naming\SubdirDirectoryNamer" public="true"/>
-    <service id="Vich\UploaderBundle\Naming\PropertyDirectoryNamer" class="Vich\UploaderBundle\Naming\PropertyDirectoryNamer" public="true">
-      <argument type="service" id="property_accessor" on-invalid="null"/>
-      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
-    </service>
-    <service id="vich_uploader.current_date_time_helper" class="Vich\UploaderBundle\Naming\CurrentDateTimeHelper" public="false"/>
-    <service id="Vich\UploaderBundle\Naming\CurrentDateTimeDirectoryNamer" class="Vich\UploaderBundle\Naming\CurrentDateTimeDirectoryNamer" public="true">
-      <argument type="service" id="vich_uploader.current_date_time_helper" on-invalid="null"/>
-      <argument type="service" id="property_accessor" on-invalid="null"/>
-    </service>
-    <service id="Vich\UploaderBundle\Naming\SmartUniqueNamer" class="Vich\UploaderBundle\Naming\SmartUniqueNamer" public="true">
-      <argument type="service" id="Vich\UploaderBundle\Util\Transliterator"/>
-    </service>
-    <service id="Vich\UploaderBundle\Util\Transliterator" class="Vich\UploaderBundle\Util\Transliterator" public="false">
-      <argument type="service" id="slugger"/>
-    </service>
-    <service id="vich_uploader.download_handler" class="Vich\UploaderBundle\Handler\DownloadHandler" public="true">
-      <argument type="service" id="vich_uploader.property_mapping_factory"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-    </service>
-    <service id="vich_uploader.upload_handler" class="Vich\UploaderBundle\Handler\UploadHandler" public="true">
-      <argument type="service" id="vich_uploader.property_mapping_factory"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-      <argument type="service" id="vich_uploader.file_injector"/>
-      <argument type="service" id="debug.event_dispatcher"/>
-    </service>
-    <service id="vich_uploader.command.mapping_debug_class" class="Vich\UploaderBundle\Command\MappingDebugClassCommand" public="false">
-      <tag name="console.command" command="vich:mapping:debug-class"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <call method="setName">
-        <argument>vich:mapping:debug-class</argument>
-      </call>
-    </service>
-    <service id="vich_uploader.command.mapping_debug" class="Vich\UploaderBundle\Command\MappingDebugCommand" public="false">
-      <tag name="console.command" command="vich:mapping:debug"/>
-      <argument>%vich_uploader.mappings%</argument>
-      <call method="setName">
-        <argument>vich:mapping:debug</argument>
-      </call>
-    </service>
-    <service id="vich_uploader.command.mapping_list_classes" class="Vich\UploaderBundle\Command\MappingListClassesCommand" public="false">
-      <tag name="console.command" command="vich:mapping:list-classes"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <call method="setName">
-        <argument>vich:mapping:list-classes</argument>
-      </call>
-    </service>
-    <service id="Vich\UploaderBundle\DataCollector\MappingCollector" class="Vich\UploaderBundle\DataCollector\MappingCollector" public="false">
-      <tag name="data_collector" template="@VichUploader/Collector/mapping_collector.html.twig" id="vich_uploader.mapping_collector"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-    </service>
-    <service id="vich_uploader.form.type.file" class="Vich\UploaderBundle\Form\Type\VichFileType" public="true">
-      <tag name="form.type" alias="vich_file"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-      <argument type="service" id="vich_uploader.property_mapping_factory"/>
-      <argument type="service" id="property_accessor"/>
-    </service>
-    <service id="vich_uploader.form.type.image" class="Vich\UploaderBundle\Form\Type\VichImageType" public="true">
-      <tag name="form.type" alias="vich_image"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-      <argument type="service" id="vich_uploader.property_mapping_factory"/>
-      <argument type="service" id="property_accessor"/>
-      <argument>null</argument>
-    </service>
-    <service id="vich_uploader.templating.helper.uploader_helper" class="Vich\UploaderBundle\Templating\Helper\UploaderHelper" public="true">
-      <tag name="templating.helper" alias="vich_uploader"/>
-      <argument type="service" id="vich_uploader.storage.file_system"/>
-    </service>
-    <service id="vich_uploader.twig.extension.uploader" class="Vich\UploaderBundle\Twig\Extension\UploaderExtension" public="false">
-      <tag name="twig.extension"/>
-      <argument type="service" id="vich_uploader.templating.helper.uploader_helper"/>
-    </service>
-    <service id="vich_uploader.listener.clean.media_object" class="Vich\UploaderBundle\EventListener\Doctrine\CleanListener" public="false">
-      <tag name="doctrine.event_subscriber" priority="50"/>
-      <argument>media_object</argument>
-      <argument type="service" id="vich_uploader.adapter.orm"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.remove.media_object" class="Vich\UploaderBundle\EventListener\Doctrine\RemoveListener" public="false">
-      <tag name="doctrine.event_subscriber" priority="0"/>
-      <argument>media_object</argument>
-      <argument type="service" id="vich_uploader.adapter.orm"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
-    <service id="vich_uploader.listener.upload.media_object" class="Vich\UploaderBundle\EventListener\Doctrine\UploadListener" public="false">
-      <tag name="doctrine.event_subscriber" priority="0"/>
-      <argument>media_object</argument>
-      <argument type="service" id="vich_uploader.adapter.orm"/>
-      <argument type="service" id="vich_uploader.metadata_reader"/>
-      <argument type="service" id="vich_uploader.upload_handler"/>
-    </service>
     <service id="sensio_framework_extra.controller.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener" public="false">
       <tag name="kernel.event_subscriber"/>
       <tag name="container.hot_path"/>
@@ -5753,8 +5203,6 @@
     <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.ApiPlatform\Core\DataPersister\DataPersisterInterface.0.App\DataPersister\UserDataPersister" class="App\DataPersister\UserDataPersister" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataPersister\UserDataPersister" class="App\DataPersister\UserDataPersister" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\EventDispatcher\EventSubscriberInterface.0.App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" class="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" class="App\EventSubscriber\ResolveMediaObjectContentUrlSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompteRepository" class="App\Repository\CompteRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CompteRepository" class="App\Repository\CompteRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContratRepository" class="App\Repository\ContratRepository" autowire="true" abstract="true"/>
@@ -6036,17 +5484,6 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.ShwN2GR" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service" id="form.type.entity"/>
-        <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service" id="form.type.choice"/>
-        <argument key="Symfony\Component\Form\Extension\Core\Type\FileType" type="service" id="form.type.file"/>
-        <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="service" id="form.type.form"/>
-        <argument key="Vich\UploaderBundle\Form\Type\VichFileType" type="service" id="vich_uploader.form.type.file"/>
-        <argument key="Vich\UploaderBundle\Form\Type\VichImageType" type="service" id="vich_uploader.form.type.image"/>
-      </argument>
-    </service>
     <service id="debug.security.voter.security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
       <argument type="service" id="security.access.authenticated_voter"/>
       <argument type="service" id="debug.event_dispatcher"/>
@@ -6083,7 +5520,6 @@
         <argument key="App\Repository\UserRepository" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id="slugger" class="Symfony\Component\String\Slugger\AsciiSlugger"/>
     <service id="logger" class="Symfony\Component\HttpKernel\Log\Logger" public="false"/>
     <service id=".service_locator.V.o0zE7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
@@ -6105,7 +5541,6 @@
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore"/>
-        <argument key="form.factory" type="service" id="form.factory" on-invalid="ignore"/>
         <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
         <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
         <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
@@ -6327,7 +5762,7 @@
       <argument type="service" id="api_platform.path_segment_name_generator.underscore"/>
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id=".service_locator.O55naKU"/>
+      <argument type="service" id=".service_locator.rQE7p35"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -6349,7 +5784,6 @@
         <argument key="translation:update">console.command.translation_update</argument>
         <argument key="lint:xliff">console.command.xliff_lint</argument>
         <argument key="lint:yaml">console.command.yaml_lint</argument>
-        <argument key="debug:form">console.command.form_debug</argument>
         <argument key="secrets:set">console.command.secrets_set</argument>
         <argument key="secrets:remove">console.command.secrets_remove</argument>
         <argument key="secrets:generate-keys">console.command.secrets_generate_key</argument>
@@ -6395,9 +5829,6 @@
         <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
         <argument key="lexik:jwt:check-config">lexik_jwt_authentication.check_config_command</argument>
         <argument key="lexik:jwt:generate-token">lexik_jwt_authentication.generate_token_command</argument>
-        <argument key="vich:mapping:debug-class">vich_uploader.command.mapping_debug_class</argument>
-        <argument key="vich:mapping:debug">vich_uploader.command.mapping_debug</argument>
-        <argument key="vich:mapping:list-classes">vich_uploader.command.mapping_list_classes</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:controller">maker.auto_command.make_controller</argument>
@@ -6418,7 +5849,7 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
       </argument>
     </service>
-    <service id=".service_locator.O55naKU" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.rQE7p35" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -6435,7 +5866,6 @@
         <argument key="console.command.container_lint" type="service" id="console.command.container_lint"/>
         <argument key="console.command.debug_autowiring" type="service" id="console.command.debug_autowiring"/>
         <argument key="console.command.event_dispatcher_debug" type="service" id="console.command.event_dispatcher_debug"/>
-        <argument key="console.command.form_debug" type="service" id="console.command.form_debug"/>
         <argument key="console.command.router_debug" type="service" id="console.command.router_debug"/>
         <argument key="console.command.router_match" type="service" id="console.command.router_match"/>
         <argument key="console.command.secrets_decrypt_to_local" type="service" id="console.command.secrets_decrypt_to_local"/>
@@ -6501,21 +5931,17 @@
         <argument key="security.command.user_password_encoder" type="service" id="security.command.user_password_encoder"/>
         <argument key="twig.command.debug" type="service" id="twig.command.debug"/>
         <argument key="twig.command.lint" type="service" id="twig.command.lint"/>
-        <argument key="vich_uploader.command.mapping_debug" type="service" id="vich_uploader.command.mapping_debug"/>
-        <argument key="vich_uploader.command.mapping_debug_class" type="service" id="vich_uploader.command.mapping_debug_class"/>
-        <argument key="vich_uploader.command.mapping_list_classes" type="service" id="vich_uploader.command.mapping_list_classes"/>
         <argument key="web_server.command.server_run" type="service" id="web_server.command.server_run"/>
         <argument key="web_server.command.server_start" type="service" id="web_server.command.server_start"/>
         <argument key="web_server.command.server_status" type="service" id="web_server.command.server_status"/>
         <argument key="web_server.command.server_stop" type="service" id="web_server.command.server_stop"/>
       </argument>
     </service>
-    <service id=".service_locator.7YWluy." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.0rjg.qe" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="Symfony\Bridge\Twig\Extension\CsrfRuntime" type="service" id="twig.runtime.security_csrf"/>
         <argument key="Symfony\Bridge\Twig\Extension\HttpKernelRuntime" type="service" id="twig.runtime.httpkernel"/>
-        <argument key="Symfony\Component\Form\FormRenderer" type="service" id="twig.form.renderer"/>
       </argument>
     </service>
     <service id="Psr\Container\ContainerInterface" alias="service_container" public="false"/>
@@ -6560,11 +5986,6 @@
     <service id="Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface" alias="security.csrf.token_generator" public="false"/>
     <service id="Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface" alias="security.csrf.token_storage" public="false"/>
     <service id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface" alias="security.csrf.token_manager" public="false"/>
-    <service id="Symfony\Component\Form\ResolvedFormTypeFactoryInterface" alias="form.resolved_type_factory" public="false"/>
-    <service id="Symfony\Component\Form\FormRegistryInterface" alias="form.registry" public="false"/>
-    <service id="Symfony\Component\Form\FormFactoryInterface" alias="form.factory" public="false"/>
-    <service id="form.property_accessor" alias="property_accessor" public="false"/>
-    <service id="form.choice_list_factory" alias="form.choice_list_factory.cached" public="false"/>
     <service id="Symfony\Component\Asset\Packages" alias="assets.packages" public="false"/>
     <service id="Symfony\Component\Validator\Validator\ValidatorInterface" alias="validator" public="false"/>
     <service id="validator.mapping.class_metadata_factory" alias="validator" public="false"/>
@@ -6703,27 +6124,6 @@
     <service id="lexik_jwt_authentication.encoder" alias="lexik_jwt_authentication.encoder.lcobucci" public="true"/>
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
-    <service id="vich_uploader.storage" alias="vich_uploader.storage.file_system"/>
-    <service id="Vich\UploaderBundle\Storage\StorageInterface" alias="vich_uploader.storage.file_system" public="false"/>
-    <service id="Vich\UploaderBundle\Storage\FileSystemStorage" alias="vich_uploader.storage.file_system" public="false"/>
-    <service id="vich_uploader.metadata_driver" alias="vich_uploader.metadata_driver.chain" public="false"/>
-    <service id="vich_uploader.metadata.cache" alias="vich_uploader.metadata.cache.file_cache" public="false"/>
-    <service id="Vich\UploaderBundle\Mapping\PropertyMappingFactory" alias="vich_uploader.property_mapping_factory" public="false"/>
-    <service id="vich_uploader.namer_uniqid" alias="Vich\UploaderBundle\Naming\UniqidNamer" public="true"/>
-    <service id="vich_uploader.namer_property" alias="Vich\UploaderBundle\Naming\PropertyNamer" public="true"/>
-    <service id="vich_uploader.namer_origname" alias="Vich\UploaderBundle\Naming\OrignameNamer" public="true"/>
-    <service id="vich_uploader.namer_hash" alias="Vich\UploaderBundle\Naming\HashNamer" public="true"/>
-    <service id="vich_uploader.namer_base64" alias="Vich\UploaderBundle\Naming\Base64Namer" public="true"/>
-    <service id="vich_uploader.directory_namer_subdir" alias="Vich\UploaderBundle\Naming\SubdirDirectoryNamer" public="true"/>
-    <service id="vich_uploader.namer_directory_property" alias="Vich\UploaderBundle\Naming\PropertyDirectoryNamer" public="true"/>
-    <service id="vich_uploader.namer_directory_current_date_time" alias="Vich\UploaderBundle\Naming\CurrentDateTimeDirectoryNamer" public="true"/>
-    <service id="vich_uploader.namer_smart_unique" alias="Vich\UploaderBundle\Naming\SmartUniqueNamer" public="true"/>
-    <service id="Vich\UploaderBundle\Handler\DownloadHandler" alias="vich_uploader.download_handler" public="false"/>
-    <service id="Vich\UploaderBundle\Handler\UploadHandler" alias="vich_uploader.upload_handler" public="false"/>
-    <service id="Vich\UploaderBundle\Form\Type\VichFileType" alias="vich_uploader.form.type.file" public="false"/>
-    <service id="Vich\UploaderBundle\Form\Type\VichImageType" alias="vich_uploader.form.type.image" public="false"/>
-    <service id="Vich\UploaderBundle\Templating\Helper\UploaderHelper" alias="vich_uploader.templating.helper.uploader_helper" public="false"/>
-    <service id="Vich\UploaderBundle\Twig\Extension\UploaderExtension" alias="vich_uploader.twig.extension.uploader" public="false"/>
     <service id="sensio_framework_extra.converter.doctrine.orm.expression_language" alias="sensio_framework_extra.converter.doctrine.orm.expression_language.default" public="false"/>
     <service id="sensio_framework_extra.security.expression_language" alias="sensio_framework_extra.security.expression_language.default" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
@@ -6731,7 +6131,6 @@
     <service id="argument_resolver.controller_locator" alias=".service_locator.37o_eIM"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
-    <service id="Symfony\Component\String\Slugger\SluggerInterface" alias="slugger"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
     <service id=".service_locator.c3XszGA" alias="api_platform.serializer_locator" public="false"/>
     <service id=".service_locator.BgI5J6G" alias="api_platform.filter_locator" public="false"/>

@@ -1,3 +1,0 @@
-<?php //route_name_310ed70e3978338e7faa782ffee592f2
-
-return [PHP_INT_MAX, 'api_media_objects_get_item'];

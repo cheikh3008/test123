@@ -80,15 +80,6 @@ class User implements AdvancedUserInterface
      */
     private $role;
 
-     /**
-     * @var MediaObject|null
-     *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
-     * @ORM\JoinColumn(nullable=true)
-     * @ApiProperty(iri="http://schema.org/image")
-     */
-    public $image;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="userPartenaire")
      */
