@@ -44,6 +44,14 @@ class NewCompteController extends AbstractController
         $partenaire_existant = $partenaireRepository->findOneBy(array('ninea' => $values->ninea));
         
         if($values){
+            if($values->montant < 500000){
+                $data = [
+                    'status' => 500,
+                    'message' => 'Veuillez déposer minimun 500 000 F pour un nouveau compte . '];
+        
+                return new JsonResponse($data, 500);
+            
+            }
             #### Creation de User Partenaire ####
             if($partenaire_existant != null){
 
