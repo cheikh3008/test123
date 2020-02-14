@@ -55,10 +55,16 @@ class Partenaire
      */
     private $contrat;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="user")
+     */
+    private $userCreateur;
+
     public function __construct()
     {
         $this->userPartenaire = new ArrayCollection();
         $this->comptes = new ArrayCollection();
+        $this->userCreateur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,37 @@ class Partenaire
     public function setContrat(?Contrat $contrat): self
     {
         $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserCreateur(): Collection
+    {
+        return $this->userCreateur;
+    }
+
+    public function addUserCreateur(User $userCreateur): self
+    {
+        if (!$this->userCreateur->contains($userCreateur)) {
+            $this->userCreateur[] = $userCreateur;
+            $userCreateur->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCreateur(User $userCreateur): self
+    {
+        if ($this->userCreateur->contains($userCreateur)) {
+            $this->userCreateur->removeElement($userCreateur);
+            // set the owning side to null (unless already changed)
+            if ($userCreateur->getUser() === $this) {
+                $userCreateur->setUser(null);
+            }
+        }
 
         return $this;
     }
