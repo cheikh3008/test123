@@ -95,11 +95,17 @@ class User implements AdvancedUserInterface
      */
     private $depots;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Affectation", mappedBy="user")
+     */
+    private $affectations;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->comptes = new ArrayCollection();
         $this->depots = new ArrayCollection();
+        $this->affectations = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -282,6 +288,37 @@ class User implements AdvancedUserInterface
             // set the owning side to null (unless already changed)
             if ($depot->getUserDepot() === $this) {
                 $depot->setUserDepot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Affectation[]
+     */
+    public function getAffectations(): Collection
+    {
+        return $this->affectations;
+    }
+
+    public function addAffectation(Affectation $affectation): self
+    {
+        if (!$this->affectations->contains($affectation)) {
+            $this->affectations[] = $affectation;
+            $affectation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAffectation(Affectation $affectation): self
+    {
+        if ($this->affectations->contains($affectation)) {
+            $this->affectations->removeElement($affectation);
+            // set the owning side to null (unless already changed)
+            if ($affectation->getUser() === $this) {
+                $affectation->setUser(null);
             }
         }
 
