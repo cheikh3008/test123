@@ -36,7 +36,7 @@ class Transaction
     /**
      * @ORM\Column(type="integer")
      */
-    private $npiece;
+    private $npieceE;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -113,6 +113,27 @@ class Transaction
      */
     private $retrait;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="transactionUserEnvoi")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userEnvoi;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="transactionUserRetrait")
+     */
+    private $userRetrait;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $code;
+
+    public function __construct()
+    {
+        $this->etat = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,14 +175,14 @@ class Transaction
         return $this;
     }
 
-    public function getNpiece(): ?int
+    public function getNpieceE(): ?int
     {
-        return $this->npiece;
+        return $this->npieceE;
     }
 
-    public function setNpiece(int $npiece): self
+    public function setNpieceE(int $npieceE): self
     {
-        $this->npiece = $npiece;
+        $this->npieceE = $npieceE;
 
         return $this;
     }
@@ -327,7 +348,7 @@ class Transaction
         return $this->envoi;
     }
 
-    public function setEnvoit(?Compte $envoi): self
+    public function setEnvoi(?Compte $envoi): self
     {
         $this->envoi = $envoi;
 
@@ -342,6 +363,42 @@ class Transaction
     public function setRetrait(?Compte $retrait): self
     {
         $this->retrait = $retrait;
+
+        return $this;
+    }
+
+    public function getUserEnvoi(): ?User
+    {
+        return $this->userEnvoi;
+    }
+
+    public function setUserEnvoi(?User $userEnvoi): self
+    {
+        $this->userEnvoi = $userEnvoi;
+
+        return $this;
+    }
+
+    public function getUserRetrait(): ?User
+    {
+        return $this->userRetrait;
+    }
+
+    public function setUserRetrait(?User $userRetrait): self
+    {
+        $this->userRetrait = $userRetrait;
+
+        return $this;
+    }
+
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    public function setCode(int $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }
