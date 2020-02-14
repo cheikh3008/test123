@@ -100,6 +100,11 @@ class User implements AdvancedUserInterface
      */
     private $affectations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="userCreateur")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -321,6 +326,18 @@ class User implements AdvancedUserInterface
                 $affectation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?Partenaire
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Partenaire $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
