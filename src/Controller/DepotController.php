@@ -63,6 +63,12 @@ class DepotController extends AbstractController
     
                 return new JsonResponse($data, 500);
             }
-        }
+        }else{
+            $data = [
+                'status' => 500,
+                'message' => 'Veuillez saisir le numéro de compte et le montant . '];
+    
+                return new JsonResponse($data, 500);
+            }
     }
 }
