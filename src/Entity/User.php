@@ -105,12 +105,24 @@ class User implements AdvancedUserInterface
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Transaction", mappedBy="userEnvoi")
+     */
+    private $transactionUserEnvoi;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Transaction", mappedBy="userRetrait")
+     */
+    private $transactionUserRetrait;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->comptes = new ArrayCollection();
         $this->depots = new ArrayCollection();
         $this->affectations = new ArrayCollection();
+        $this->transactionUserEnvoi = new ArrayCollection();
+        $this->transactionUserRetrait = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -338,6 +350,68 @@ class User implements AdvancedUserInterface
     public function setUser(?Partenaire $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransactionUserEnvoi(): Collection
+    {
+        return $this->transactionUserEnvoi;
+    }
+
+    public function addTransactionUserEnvoi(Transaction $transactionUserEnvoi): self
+    {
+        if (!$this->transactionUserEnvoi->contains($transactionUserEnvoi)) {
+            $this->transactionUserEnvoi[] = $transactionUserEnvoi;
+            $transactionUserEnvoi->setUserEnvoi($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransactionUserEnvoi(Transaction $transactionUserEnvoi): self
+    {
+        if ($this->transactionUserEnvoi->contains($transactionUserEnvoi)) {
+            $this->transactionUserEnvoi->removeElement($transactionUserEnvoi);
+            // set the owning side to null (unless already changed)
+            if ($transactionUserEnvoi->getUserEnvoi() === $this) {
+                $transactionUserEnvoi->setUserEnvoi(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransactionUserRetrait(): Collection
+    {
+        return $this->transactionUserRetrait;
+    }
+
+    public function addTransactionUserRetrait(Transaction $transactionUserRetrait): self
+    {
+        if (!$this->transactionUserRetrait->contains($transactionUserRetrait)) {
+            $this->transactionUserRetrait[] = $transactionUserRetrait;
+            $transactionUserRetrait->setUserRetrait($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransactionUserRetrait(Transaction $transactionUserRetrait): self
+    {
+        if ($this->transactionUserRetrait->contains($transactionUserRetrait)) {
+            $this->transactionUserRetrait->removeElement($transactionUserRetrait);
+            // set the owning side to null (unless already changed)
+            if ($transactionUserRetrait->getUserRetrait() === $this) {
+                $transactionUserRetrait->setUserRetrait(null);
+            }
+        }
 
         return $this;
     }

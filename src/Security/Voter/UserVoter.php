@@ -9,6 +9,13 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class UserVoter extends Voter implements VoterInterface
 {
+    const ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN";
+    const ROLE_ADMIN = "ROLE_ADMIN";
+    const ROLE_PARTENAIRE = "ROLE_PARTENAIRE";
+    const ROLE_ADMIN_PARTENAIRE = "ROLE_ADMIN_PARTENAIRE";
+    const ROLE_CAISSIER = "ROLE_CAISSIER";
+    const ROLE_USER_PARTENAIRE = "ROLE_USER_PARTENAIRE";
+
     protected function supports($attribute, $subject)
     {
         // replace with your own logic
@@ -26,7 +33,10 @@ class UserVoter extends Voter implements VoterInterface
         if (!$userConnect instanceof UserInterface) {
             return false;
         }
-        if($userConnect->getRoles()[0]==="ROLE_SUPER_ADMIN" && $subject->getRoles()[0] != "ROLE_SUPER_ADMIN" ){
+        if($userConnect->getRoles()[0]===UserVoter::ROLE_SUPER_ADMIN && $subject->getRoles()[0] != UserVoter::ROLE_SUPER_ADMIN && $subject->getRoles()[0] != "ROLE_USER_PARTENAIRE" && $subject->getRoles()[0] != "ROLE_ADMIN_PARTENAIRE"){
+            return true;
+        }
+        if($userConnect->getRoles()[0]===UserVoter::ROLE_PARTENAIRE && $subject->getRoles()[0] != UserVoter::ROLE_PARTENAIRE && $subject->getRoles()[0] != userVoter::ROLE_CAISSIER && $subject->getRoles()[0] != UserVoter::ROLE_ADMIN && $subject->getRoles()[0] != UserVoter::ROLE_SUPER_ADMIN){
             return true;
         }
         // ... (check conditions and return true to grant permission) ...
@@ -35,7 +45,10 @@ class UserVoter extends Voter implements VoterInterface
             case 'POST_EDIT':   
                 if($userConnect->getRoles()[0]==="ROLE_ADMIN" && ($subject->getRoles()[0] === "ROLE_CAISSIER" || $subject->getRoles()[0] === "ROLE_PARTENAIRE")){
                     return true;
-                }else if($userConnect->getRoles()[0]==="ROLE_CAISSIER" || $userConnect->getRoles()[0]==="ROLE_PARTENAIRE"){
+                }elseif($userConnect->getRoles()[0]===UserVoter::ROLE_ADMIN_PARTENAIRE && ($subject->getRoles()[0] === UserVoter::ROLE_USER_PARTENAIRE)){
+                    return true;
+                }
+                else if($userConnect->getRoles()[0]===UserVoter::ROLE_CAISSIER || $userConnect->getRoles()[0]===UserVoter::ROLE_USER_PARTENAIRE){
                     return false;
                 }
                           
@@ -43,7 +56,7 @@ class UserVoter extends Voter implements VoterInterface
                 break;
             case 'POST_VIEW':
                 // logic to determine if the user can VIEW
-                if($userConnect->getRoles()[0]==="ROLE_CAISSIER"){
+                if($userConnect->getRoles()[0]===UserVoter::ROLE_CAISSIER){
                     return false;
                 }   
                 break;   
