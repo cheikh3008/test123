@@ -10,6 +10,7 @@ use App\Repository\TransactionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -22,35 +23,53 @@ class RetraitController extends AbstractController
     }
     /**
      *@Route("/api/transaction/retrait", name="retrait", methods={"POST"})
+     *@IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE", "ROLE_USER_CAISSIER"})
      */
     public function retrait(Request $request,EntityManagerInterface $manager, AffectationRepository $affectationRepository, CompteRepository $compteRipo, TransactionRepository $transactionRepository)
     {   
         $values = json_decode($request->getContent());
+        #### Récupération du code de retrait ####
         $code = $transactionRepository->findOneBy(array("code" => $values->code));
-        if($code){
+        #### Vérifie si le code est valide ####
+        if($code)
+        {
             $userRetrait = $this->tokenStorage->getToken()->getUser();
             $dateRetrait = new \DateTime();
             $userAffcete = $affectationRepository->findOneBy(array("user"=>$userRetrait));
             $comRetrait =  $code->getFrais()*20/100;
             
-            if(!$userAffcete){
+            #### Vérifie si l'utlisateur est affecté à un commpte ####
+            if($userAffcete)
+            {
+                $compte = $userAffcete->getCompte();
+                $compte = $compteRipo->findOneBy(array("id"=>$compte));
+        
+            }
+            #### Vérifie si l'utlisateur est partenaire ou admin partenaire ####
+            elseif($userRetrait->getRole()->getLibelle() === "ROLE_PARTENAIRE" || $userRetrait->getRole()->getLibelle() === "ROLE_ADMIN_PARTENAIRE" )
+            {
+                
+                $compte = $compteRipo->findOneBy(array("numCompte" => $values->numCompte));
+            
+            }
+            #### Vérifie si l'utlisateur n'est pas affacté à un compte ####
+            else
+            {
                 $data = [
                     'status' => 500,
                     'message' => 'Aucun compte n\'est affecté à cet utlisateur . '];
         
                 return new JsonResponse($data, 500);
-        
             }
-            $compte = $userAffcete->getCompte();
-            $compte = $compteRipo->findOneBy(array("id"=>$compte));
-            
-            if($code->getEtat()=== true){
+            #### vérifie sur si le code est retiré ####
+            if($code->getEtat()=== true)
+            {
                 
                 $data = [
-                    'status' => 201,
-                    'message' => 'Ce code est enoyé déja retiré '];
+                    'status' => 500,
+                    'message' => 'Ce code est déja retiré '];
         
-                return new JsonResponse($data, 201); 
+                return new JsonResponse($data, 500); 
             }
             
             $code->setDateRetrait($dateRetrait)
@@ -68,18 +87,20 @@ class RetraitController extends AbstractController
             $manager->persist($compte);
             $manager->flush();
             $data = [
-                'status' => 201,
-                'message' => 'Vous avez retiré '. $code->getMontant()];
-    
-                return new JsonResponse($data, 201);
-
-       }else {
-        $data = [
             'status' => 201,
-            'message' => 'Le code saisit est incorrect ...' ];
+            'message' => 'Vous avez retiré '. $code->getMontant()];
 
             return new JsonResponse($data, 201);
-       }
+
+        }
+        else 
+        {
+        $data = [
+        'status' => 201,
+        'message' => 'Le code saisit est incorrect ...' ];
+
+        return new JsonResponse($data, 201);
+        }
     
     }
 }
