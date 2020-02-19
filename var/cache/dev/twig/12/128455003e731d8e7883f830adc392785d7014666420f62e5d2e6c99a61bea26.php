@@ -206,6 +206,6 @@ class __TwigTemplate_b4aa781636f9ec29943ea012fbb65b3874948ca669ea79a46e1782493a4
     {% endfor %}
     </tbody>
 </table>
-", "@Twig/Exception/logs.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/logs.html.twig");
+", "@Twig/Exception/logs.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/logs.html.twig");
     }
 }

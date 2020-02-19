@@ -61,6 +61,6 @@ class __TwigTemplate_65e06bec3f836264d11be3f47ea7d76c8783f5bd5ece72dd1f95e5e9626
         return new Source("<div>
     <?php echo \$view['form']->widget(\$form) ?>
 </div>
-", "@Framework/Form/button_row.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/Form/button_row.html.php");
+", "@Framework/Form/button_row.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/Form/button_row.html.php");
     }
 }

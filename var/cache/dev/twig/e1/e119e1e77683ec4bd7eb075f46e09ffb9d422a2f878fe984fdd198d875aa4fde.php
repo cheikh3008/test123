@@ -57,6 +57,6 @@ class __TwigTemplate_1df7c7b0506acb4e0e21f531ddf02d7397bc3bdc703d101a576e170f4bb
     public function getSourceContext()
     {
         return new Source("<?php echo \$view['form']->block(\$form, 'form_widget_simple', ['type' => isset(\$type) ? \$type : 'password']) ?>
-", "@Framework/Form/password_widget.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/Form/password_widget.html.php");
+", "@Framework/Form/password_widget.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/Form/password_widget.html.php");
     }
 }

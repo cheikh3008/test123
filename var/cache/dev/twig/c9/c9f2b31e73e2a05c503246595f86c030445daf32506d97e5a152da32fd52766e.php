@@ -59,6 +59,6 @@ class __TwigTemplate_53733a3ea541321d89304f09603e7a5e2308dce04c5b7b48cddd83e3eac
     {
         return new Source("id=\"<?php echo \$view->escape(\$id) ?>\" name=\"<?php echo \$view->escape(\$full_name) ?>\"<?php if (\$disabled): ?> disabled=\"disabled\"<?php endif ?>
 <?php echo \$attr ? ' '.\$view['form']->block(\$form, 'attributes') : '' ?>
-", "@Framework/Form/button_attributes.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/Form/button_attributes.html.php");
+", "@Framework/Form/button_attributes.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/Form/button_attributes.html.php");
     }
 }

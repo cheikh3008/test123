@@ -57,6 +57,6 @@ class __TwigTemplate_e9df6ec151edd89cfc1a0f93a24d62287cb21d2ac2b6f2a5769683684c7
     public function getSourceContext()
     {
         return new Source("<?php echo \$view['form']->block(\$form, 'button_widget', ['type' => isset(\$type) ? \$type : 'reset']) ?>
-", "@Framework/Form/reset_widget.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/Form/reset_widget.html.php");
+", "@Framework/Form/reset_widget.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/Form/reset_widget.html.php");
     }
 }

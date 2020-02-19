@@ -143,6 +143,6 @@ class __TwigTemplate_d50184488bfe8fafc52d7bef941b5e384cfaf7b6b4d7b561b94895e0630
         {% block javascripts %}{% endblock %}
     </body>
 </html>
-", "base.html.twig", "/home/cheikhdieng/Bureau/money_transfer/templates/base.html.twig");
+", "base.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/templates/base.html.twig");
     }
 }

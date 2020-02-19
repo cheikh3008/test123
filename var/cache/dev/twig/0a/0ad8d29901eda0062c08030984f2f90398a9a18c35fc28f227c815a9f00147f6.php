@@ -67,6 +67,6 @@ class __TwigTemplate_c1a4a93c4c60651e0f81c0a910ac2aac1a7dac1a54c1b04606feb0dcb54
     {
         return new Source("{% deprecated 'The template \"' ~ _self ~'\" is deprecated since Symfony 4.4, will be removed in 5.0.' %}
 {{ include('@Twig/Exception/error.xml.twig') }}
-", "@Twig/Exception/error.atom.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/error.atom.twig");
+", "@Twig/Exception/error.atom.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/error.atom.twig");
     }
 }

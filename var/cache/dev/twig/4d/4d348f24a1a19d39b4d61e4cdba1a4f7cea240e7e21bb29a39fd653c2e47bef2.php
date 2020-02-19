@@ -1134,6 +1134,6 @@ class __TwigTemplate_df666fcd709f84cbe6a5e67db5b4aa65febe1cfaeb7fff57aad74f2e9a7
 
 </body>
 </html>
-", "@ApiPlatform/GraphQlPlayground/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/GraphQlPlayground/index.html.twig");
+", "@ApiPlatform/GraphQlPlayground/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/GraphQlPlayground/index.html.twig");
     }
 }

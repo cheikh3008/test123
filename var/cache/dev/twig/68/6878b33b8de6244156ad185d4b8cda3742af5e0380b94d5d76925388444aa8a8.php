@@ -133,6 +133,6 @@ class __TwigTemplate_b9660c07a51967f4301326b2e49d88e41432fadd282fbd7c17235184de7
 
 </body>
 </html>
-", "@ApiPlatform/Graphiql/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/Graphiql/index.html.twig");
+", "@ApiPlatform/Graphiql/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/Graphiql/index.html.twig");
     }
 }

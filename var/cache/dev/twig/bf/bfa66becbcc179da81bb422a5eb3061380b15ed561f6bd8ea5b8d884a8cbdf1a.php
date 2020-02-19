@@ -155,6 +155,6 @@ class __TwigTemplate_ae4c14d93c4c56008602ba63b3bcd9bcd45cf39374523f0e9d884a4597c
         </tr>
     </tbody>
 </table>
-", "@Twig/Exception/traces_text.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/traces_text.html.twig");
+", "@Twig/Exception/traces_text.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/traces_text.html.twig");
     }
 }

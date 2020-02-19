@@ -633,6 +633,6 @@ class __TwigTemplate_dcb80b725f908d56a03aa0a1e357ab9926bc3d7ba948079cfb113ec601c
     });
 
 /*]]>*/</script>
-", "@Twig/base_js.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/base_js.html.twig");
+", "@Twig/base_js.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/base_js.html.twig");
     }
 }

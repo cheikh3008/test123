@@ -77,6 +77,6 @@ class __TwigTemplate_cb69f11aecafd358414b6c2cff71f9c0100af94336e072c3d385425bddc
 {{ status_code }} {{ status_text }}
 
 */
-", "@Twig/Exception/error.js.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/error.js.twig");
+", "@Twig/Exception/error.js.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/error.js.twig");
     }
 }

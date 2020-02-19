@@ -165,6 +165,6 @@ class __TwigTemplate_6ad0f3aefd9117165c40257dab78ebed17aff0549293a6443fad509f797
         {%- endfor -%}
     </pre>
 {% endif %}
-", "@Doctrine/Collector/explain.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
+", "@Doctrine/Collector/explain.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
     }
 }

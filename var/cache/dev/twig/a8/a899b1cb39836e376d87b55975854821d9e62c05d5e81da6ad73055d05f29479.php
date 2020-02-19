@@ -375,6 +375,6 @@ class __TwigTemplate_96719b22c8efaf5792b0673903f1e565548c52408de1ebc0403f6632e65
 
 </body>
 </html>
-", "@ApiPlatform/SwaggerUi/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/SwaggerUi/index.html.twig");
+", "@ApiPlatform/SwaggerUi/index.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views/SwaggerUi/index.html.twig");
     }
 }

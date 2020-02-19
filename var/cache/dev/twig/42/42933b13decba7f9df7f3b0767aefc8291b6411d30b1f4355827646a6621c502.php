@@ -100,6 +100,6 @@ class __TwigTemplate_6d4a6bea11ccaf9f1c5fd5199642f17e2ad57e5e4e34cb8bb318ae5beab
 {{ include('@Twig/Exception/traces.txt.twig', { exception: e }, with_context = false) }}
 
 {% endfor %}
-", "@Twig/Exception/exception.txt.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/exception.txt.twig");
+", "@Twig/Exception/exception.txt.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/exception.txt.twig");
     }
 }

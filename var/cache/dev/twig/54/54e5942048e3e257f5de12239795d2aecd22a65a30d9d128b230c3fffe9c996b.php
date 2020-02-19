@@ -65,6 +65,6 @@ class __TwigTemplate_c4cfc5abc7a3b1c19465b50f06ff019250fbd2fb44a04f6249ecdf9d920
         <?php echo \$view['form']->widget(\$form); ?>
     </td>
 </tr>
-", "@Framework/FormTable/hidden_row.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/FormTable/hidden_row.html.php");
+", "@Framework/FormTable/hidden_row.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/FormTable/hidden_row.html.php");
     }
 }

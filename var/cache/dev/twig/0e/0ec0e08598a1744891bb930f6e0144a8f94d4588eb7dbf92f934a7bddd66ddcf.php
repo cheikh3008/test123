@@ -53,6 +53,6 @@ class __TwigTemplate_9f920cd72f5b2c6d1ed6cf3b58e14c95c3687cd3af07a37ccc2f8a14fd5
 
     public function getSourceContext()
     {
-        return new Source("", "@Framework/Form/button_label.html.php", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/framework-bundle/Resources/views/Form/button_label.html.php");
+        return new Source("", "@Framework/Form/button_label.html.php", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/framework-bundle/Resources/views/Form/button_label.html.php");
     }
 }

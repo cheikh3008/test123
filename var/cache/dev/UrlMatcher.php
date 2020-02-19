@@ -11,6 +11,7 @@ return [
         '/api/fairedepot' => [[['_route' => 'depot', '_controller' => 'App\\Controller\\DepotController::faireDepot'], null, ['POST' => 0], null, false, false, null]],
         '/api/new/compte' => [[['_route' => 'new_compte', '_controller' => 'App\\Controller\\NewCompteController::newCompte'], null, ['POST' => 0], null, false, false, null]],
         '/api/transaction/envoi' => [[['_route' => 'envoi', '_controller' => 'App\\Controller\\TransactionController::envoi'], null, ['POST' => 0], null, false, false, null]],
+        '/api/transaction/retrait' => [[['_route' => 'retrait', '_controller' => 'App\\Controller\\TransactionController::retrait'], null, ['POST' => 0], null, false, false, null]],
         '/api/login_check' => [[['_route' => 'login_check'], null, ['POST' => 0], null, false, false, null]],
         '/docs' => [[['_route' => 'swagger_ui', '_controller' => 'api_platform.swagger.action.ui'], null, null, null, false, false, null]],
     ],

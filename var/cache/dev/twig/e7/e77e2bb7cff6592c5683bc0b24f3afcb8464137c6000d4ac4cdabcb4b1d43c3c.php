@@ -198,6 +198,6 @@ class __TwigTemplate_aa079cecbfbbcac3e1dc7e0e362e079fec6b5f7c690b871badbec87e3fc
         })|raw }}
     </div>
 {% endif %}
-", "@Twig/Exception/trace.html.twig", "/home/cheikhdieng/Bureau/money_transfer/vendor/symfony/twig-bundle/Resources/views/Exception/trace.html.twig");
+", "@Twig/Exception/trace.html.twig", "/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/symfony/twig-bundle/Resources/views/Exception/trace.html.twig");
     }
 }
