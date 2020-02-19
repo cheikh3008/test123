@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 
 /**
@@ -35,7 +34,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ApiResource(iri="http://schema.org/User")
  *  @UniqueEntity("email" , message="cette adresse email existe déja.")
  */
-class User implements AdvancedUserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -176,7 +175,10 @@ class User implements AdvancedUserInterface
 
         return $this;
     }
-
+    public function eraseCredentials()
+    {
+        return null;
+    }
     public function getIsActive(): ?bool
     {
         return $this->isActive;
@@ -216,27 +218,7 @@ class User implements AdvancedUserInterface
 
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        return null;
-    }
-
-    public function isAccountNonExpired(){
-        return true;
-    }
-    public function isAccountNonLocked(){
-        return true;
-    }
-    public function isCredentialsNonExpired(){
-        return true;
-    }
-    public function isEnabled(){
-        return $this->getIsActive();
-    }
-
+    
     public function getPartenaire(): ?Partenaire
     {
         return $this->partenaire;

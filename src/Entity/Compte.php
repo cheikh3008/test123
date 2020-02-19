@@ -228,7 +228,7 @@ class Compte
     {
         if (!$this->userTransaction->contains($userTransaction)) {
             $this->userTransaction[] = $userTransaction;
-            $userTransaction->setDepot($this);
+            $userTransaction->setEnvoi($this);
         }
 
         return $this;
@@ -239,8 +239,8 @@ class Compte
         if ($this->userTransaction->contains($userTransaction)) {
             $this->userTransaction->removeElement($userTransaction);
             // set the owning side to null (unless already changed)
-            if ($userTransaction->getDepot() === $this) {
-                $userTransaction->setDepot(null);
+            if ($userTransaction->getEnvoi() === $this) {
+                $userTransaction->setEnvoi(null);
             }
         }
 

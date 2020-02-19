@@ -282,6 +282,17 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function eraseCredentials()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'eraseCredentials', []);
+
+        return parent::eraseCredentials();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getIsActive(): ?bool
     {
 
@@ -354,61 +365,6 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSalt', []);
 
         return parent::getSalt();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function eraseCredentials()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'eraseCredentials', []);
-
-        return parent::eraseCredentials();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isAccountNonExpired()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isAccountNonExpired', []);
-
-        return parent::isAccountNonExpired();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isAccountNonLocked()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isAccountNonLocked', []);
-
-        return parent::isAccountNonLocked();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isCredentialsNonExpired()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isCredentialsNonExpired', []);
-
-        return parent::isCredentialsNonExpired();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isEnabled()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isEnabled', []);
-
-        return parent::isEnabled();
     }
 
     /**
