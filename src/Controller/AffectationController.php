@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -24,30 +26,33 @@ class AffectationController extends AbstractController
     }
     /**
      * @Route("/api/affectation", name="affectation", methods={"POST"})
+     * @IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE"})
      */
-    public function affectation(PartenaireRepository $partenaireRepository, CompteRepository $compteRepository, RoleRepository $roleRepository, UserRepository $user,Request $request, EntityManagerInterface $manager)
+    public function affectation(PartenaireRepository $partenaireRepository, CompteRepository $compteRepository, RoleRepository $roleRepository, UserRepository $user,Request $request, EntityManagerInterface $manager, SerializerInterface $serializer)
     {
         $values = json_decode($request->getContent());
         $userConnect = $this->tokenStorage->getToken()->getUser();
         $userPartenaire = $userConnect->getPartenaire();
         $res = $user->findBy(array("partenaire" => $userPartenaire));
-       
+        dd($res);
         $compteRepository->findBy(array("partenaire" => $userPartenaire));
-        $dateJour = new \DateTime();
-        if($dateJour >= \DateTime::createFromFormat('Y-m-d  H:i:s' , $values->dateDebut)){
-            $affectation = new Affectation();
-            $affectation->setDateDebut($values->dateDebut)
-                        ->setDateFin($values->dateFin)
-                        ->setCompte($values->compte)
-                        ->setUser($values->user);
-            $manager->persist($affectation);
-            dd($affectation);
-        }else{
-            $data = [
-                'status' => 500,
-                'message' => 'La date est passée  . '];
     
-            return new JsonResponse($data, 500);
-        }
+        $affectation = $serializer->deserialize($request->getContent(), Affectation::class, 'json');
+        $d= $values->dateDebut;
+        $f= $values->dateFin;
+        $affectation->setDateDebut(\DateTime::createFromFormat('Y-m-d', $d))
+                    ->setDateFin(\DateTime::createFromFormat('Y-m-d', $f))
+                    ->setCompte($affectation->getCompte())
+                    ->setUser($affectation->getUser());
+        $manager->persist($affectation);
+        
+        $manager->flush();
+        $data = [
+            'status' => 201,
+            'message' => 'Ok ... '
+            ] ;
+
+        return new JsonResponse($data, 201);
+        
     }
 }
