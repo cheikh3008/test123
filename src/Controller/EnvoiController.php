@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+//require '../src/Osms.php';
+
+use App\Osms;
 use App\Entity\Transaction;
 use App\Repository\TarifRepository;
 use App\Repository\CompteRepository;
@@ -25,7 +28,7 @@ class EnvoiController extends AbstractController
     }
     /**
      * @Route("/api/transaction/envoi", name="envoi", methods={"POST"})
-     * @IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE", "ROLE_USER_CAISSIER"})
+     * @IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE", "ROLE_USER_PARTENAIRE"})
      */
     public function envoi(Request $request,EntityManagerInterface $manager, AffectationRepository           $affectationRepository, CompteRepository $compteRipo, TarifRepository $tarifRepository)    {
         $userEnvoi = $this->tokenStorage->getToken()->getUser();
@@ -33,6 +36,7 @@ class EnvoiController extends AbstractController
 
         
         $userAffcete = $affectationRepository->findOneBy(array("user"=>$userEnvoi));
+        
         if($values)
         {
             #### Vérifie si l'utlisateur est affecté à un commpte ####
@@ -40,8 +44,9 @@ class EnvoiController extends AbstractController
             {
                 $compte = $userAffcete->getCompte();
                 $compte = $compteRipo->findOneBy(array("id"=>$compte));
-        
+                
             }
+            
             #### Vérifie si l'utlisateur est partenaire ou admin partenaire ####
             elseif($userEnvoi->getRole()->getLibelle() === "ROLE_PARTENAIRE" || $userEnvoi->getRole()->getLibelle() === "ROLE_ADMIN_PARTENAIRE" )
             {
@@ -117,7 +122,33 @@ class EnvoiController extends AbstractController
             $NouveauSolde = ($compte->getSolde() - $values->montant );
             $compte->setSolde($NouveauSolde);
             $manager->persist($compte);
-            $manager->flush();
+
+            $config = array(
+                'token' => 'your_access_token'
+            );
+            
+            $osms = new Osms($config);
+            
+            //$osms->setVerifyPeerSSL(false);
+            
+            $response = $osms->sendSms(
+                // sender
+                "tel:+2210000",
+                // receiver
+                "tel:+221773043248",
+                // message
+                "Hello World!"
+            );
+            
+            if (empty($response['error'])) {
+                echo 'Done!';
+            } else {
+                echo $response['error'];
+            }
+           
+            //$manager->flush();
+                        
+            
             $data = [
             'status' => 201,
             'message' => 'Vous avez enoyé '.$values->montant. ' à '. $values->prenomE.' - '. $values->nomE .' - ' ];

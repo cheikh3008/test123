@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Affectation;
-use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Repository\CompteRepository;
 use App\Repository\PartenaireRepository;
@@ -28,31 +27,87 @@ class AffectationController extends AbstractController
      * @Route("/api/affectation", name="affectation", methods={"POST"})
      * @IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE"})
      */
-    public function affectation(PartenaireRepository $partenaireRepository, CompteRepository $compteRepository, RoleRepository $roleRepository, UserRepository $user,Request $request, EntityManagerInterface $manager, SerializerInterface $serializer)
+    public function affectation(PartenaireRepository $partenaireRepository, CompteRepository $compteRepository, UserRepository $user,Request $request, EntityManagerInterface $manager, SerializerInterface $serializer)
     {
         $values = json_decode($request->getContent());
         $userConnect = $this->tokenStorage->getToken()->getUser();
         $userPartenaire = $userConnect->getPartenaire();
-        $res = $user->findBy(array("partenaire" => $userPartenaire));
-        dd($res);
-        $compteRepository->findBy(array("partenaire" => $userPartenaire));
-    
         $affectation = $serializer->deserialize($request->getContent(), Affectation::class, 'json');
-        $d= $values->dateDebut;
-        $f= $values->dateFin;
-        $affectation->setDateDebut(\DateTime::createFromFormat('Y-m-d', $d))
-                    ->setDateFin(\DateTime::createFromFormat('Y-m-d', $f))
-                    ->setCompte($affectation->getCompte())
-                    ->setUser($affectation->getUser());
-        $manager->persist($affectation);
-        
-        $manager->flush();
-        $data = [
-            'status' => 201,
-            'message' => 'Ok ... '
-            ] ;
 
-        return new JsonResponse($data, 201);
+        $dateJour  = new \DateTime();
+         ##### Transforme un texte anglais en timestamp  ######
+        $dateDebut = strtotime ($values->dateDebut);
+        $dateFin = strtotime($values->dateFin);
+        $dateJour = strtotime($dateJour->format('Y-m-d'));
+
+        ##### Vérifie si la date est passée ######
         
+        if($dateDebut < $dateJour )
+        {
+            $data = [
+                'status' => 500,
+                'message' => 'Impossible d\'affecter à une date pasée . '
+                ] ;
+            return new JsonResponse($data, 500);
+        }
+        
+         ##### Vérifie si la date de fin supérieur à la date de début ######
+        if($dateFin < $dateDebut )
+        {
+            $data = [
+                'status' => 500,
+                'message' => 'La date de fin doit être doit supérieur à la date de début . '
+                ] ;
+            return new JsonResponse($data, 500);
+        }
+
+        ##### Vérifie si le compte appartient à ce partenaire ######
+        if($affectation->getCompte()->getPartenaire() != $userPartenaire)
+        {
+            $data = [
+                'status' => 500,
+                'message' => 'Impossible d\'affecter à un compte qui ne vous appartient pas . '
+                ] ;
+
+            return new JsonResponse($data, 500);
+         
+        }
+        ##### Vérifie si l'utlisateur appartient à ce partenaire ######
+        if($affectation->getUser()->getPartenaire() != $userPartenaire)
+        {
+            $data = [
+                'status' => 500,
+                'message' => 'Cet utilisateur n\'appartient à ce partenaire. '
+                ] ;
+
+            return new JsonResponse($data, 500);
+         
+        }
+        ##### Vérifie si l'utilisateur a le role USER_PARTENAIRE ######
+        if($affectation->getUser()->getRole()->getLibelle() === "ROLE_USER_PARTENAIRE")
+        {
+           
+            $affectation->setDateDebut(\DateTime::createFromFormat('Y-m-d', $values->dateDebut))
+                        ->setDateFin(\DateTime::createFromFormat('Y-m-d', $values->dateFin))
+                        ->setCompte($affectation->getCompte())
+                        ->setUser($affectation->getUser());
+            $manager->persist($affectation);
+            $manager->flush();
+            $data = [
+                'status' => 201,
+                'message' => 'L\'affectation a réussi avec sucess... '
+                ] ;
+
+            return new JsonResponse($data, 201);
+        }
+        else
+        {
+            $data = [
+                'status' => 500,
+                'message' => 'L\'affectation n\'est autorisé qu\'aux users partenaire... '
+                ] ;
+
+            return new JsonResponse($data, 500);
+        }
     }
 }

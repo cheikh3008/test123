@@ -9,6 +9,15 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
     null,
     [
         'stdClass' => [
+            'attributes' => [
+                [
+                    'normalization_context' => [
+                        'groups' => [
+                            'compte',
+                        ],
+                    ],
+                ],
+            ],
             'repositoryClass' => [
                 1 => 'App\\Repository\\CompteRepository',
             ],

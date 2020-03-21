@@ -25,7 +25,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 1 => [
                     'ROLE_PARTENAIRE',
                     'ROLE_ADMIN_PARTENAIRE',
-                    'ROLE_USER_CAISSIER',
+                    'ROLE_USER_PARTENAIRE',
                 ],
             ],
         ],

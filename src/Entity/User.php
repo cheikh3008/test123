@@ -4,16 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ApiResource(
+* normalizationContext={"groups"={"user"}},
  *     itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"user:read", "user:item:get"}},
@@ -27,7 +28,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     collectionOperations={
  *          "get"={"access_control"="is_granted('ROLE_ADMIN')"},
  *          "post"={"access_control"="is_granted('POST_EDIT',object)"}
+ * 
  *     }
+ * 
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * 
@@ -40,35 +43,41 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+      * @Groups({"user"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+      * @Groups({"user"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "Veuillez saisir une adresse email valide ." )
+      * @Groups({"user"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+      * @Groups({"user"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="boolean")
+      * @Groups({"user"})
      */
     private $isActive;
 
@@ -76,6 +85,7 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"user"})
      */
     private $role;
 

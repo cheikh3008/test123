@@ -8,9 +8,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"compte"}})
  * @ORM\Entity(repositoryClass="App\Repository\CompteRepository")
  * @UniqueEntity("numCompte" , message="ce numéro de compte  existe déja.")
  */
@@ -20,24 +22,28 @@ class Compte
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+    * @Groups({"compte"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+    * @Groups({"compte"})
      */
     private $numCompte;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"compte"})
      */
     private $solde;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"compte"})
      * )
      */
     private $createdAt;
@@ -46,6 +52,7 @@ class Compte
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"compte"})
      */
     private $userCreateur;
 
@@ -53,12 +60,14 @@ class Compte
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"compte"})
      */
     private $partenaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Depot", mappedBy="compte")
      * @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Groups({"compte"})
      */
     private $depot;
 

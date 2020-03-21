@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
-use App\Repository\PartenaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +22,7 @@ class BloquerPartenaireController extends AbstractController
      * @Route("/api/bloquer/{id}", name="bloquer_partenaire", methods={"PUT"})
      * @IsGranted({"ROLE_ADMIN_SYSTEM" ,"ROLE_ADMIN"})
      */
-   public function bloquer (Request $request, EntityManagerInterface $manager,PartenaireRepository $partenaireRepository, UserRepository $userRepository, RoleRepository $roleRepository,$id)
+   public function bloquer (Request $request, EntityManagerInterface $manager, UserRepository $userRepository,$id)
    {    
         $values = json_decode($request->getContent());
         $this->tokenStorage->getToken()->getUser();
@@ -34,8 +31,10 @@ class BloquerPartenaireController extends AbstractController
         ##### Récupération des utlisateurs du partenaire  #######
         $partenaire = $userRepository->findBy(array("partenaire" => $partenaire_id->getPartenaire()));
         ##### Bloquer le partenaire et es utlisateurs #######
-        if($partenaire_id->getIsActive() === true){
-            foreach ($partenaire as $result){
+        if($partenaire_id->getIsActive() === true)
+        {
+            foreach ($partenaire as $result)
+            {
                 if($result->getPartenaire()){
                     $result->setIsActive($values->isActive);
                     $manager->persist($result);
@@ -49,9 +48,13 @@ class BloquerPartenaireController extends AbstractController
             ];
 
             return new JsonResponse($data, 201);
-        }else{
-            foreach ($partenaire as $result){
-                if($result->getPartenaire()){
+        }
+        ##### Bloquer le partenaire et es utlisateurs #######
+        else{
+            foreach ($partenaire as $result)
+            {
+                if($result->getPartenaire())
+                {
                     $result->setIsActive($values->isActive);
                     $manager->persist($result);
                     $manager->flush();

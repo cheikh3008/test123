@@ -176,6 +176,11 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'attributes' => [
                 [
+                    'normalization_context' => [
+                        'groups' => [
+                            'compte',
+                        ],
+                    ],
                     'input' => null,
                     'output' => null,
                 ],
