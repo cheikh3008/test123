@@ -8,8 +8,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
-
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ListUsersController extends AbstractController
 {
@@ -21,6 +20,7 @@ class ListUsersController extends AbstractController
     }
     /**
      * @Route("/api/list/users", name="list_users", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
      */
 
     
@@ -52,8 +52,6 @@ class ListUsersController extends AbstractController
         ]);
 
     	
-
-
     }
 
 }

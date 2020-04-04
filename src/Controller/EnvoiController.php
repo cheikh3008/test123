@@ -122,31 +122,7 @@ class EnvoiController extends AbstractController
             $NouveauSolde = ($compte->getSolde() - $values->montant );
             $compte->setSolde($NouveauSolde);
             $manager->persist($compte);
-
-            $config = array(
-                'token' => 'your_access_token'
-            );
-            
-            $osms = new Osms($config);
-            
-            //$osms->setVerifyPeerSSL(false);
-            
-            $response = $osms->sendSms(
-                // sender
-                "tel:+2210000",
-                // receiver
-                "tel:+221773043248",
-                // message
-                "Hello World!"
-            );
-            
-            if (empty($response['error'])) {
-                echo 'Done!';
-            } else {
-                echo $response['error'];
-            }
-           
-            //$manager->flush();
+            $manager->flush();
                         
             
             $data = [

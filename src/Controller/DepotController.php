@@ -20,8 +20,9 @@ class DepotController extends AbstractController
     {
         $this->tokenStorage = $tokenStorage;
     }
+
     /**
-     * @Route("api/fairedepot", name="depot",  methods={"POST"})
+     * @Route("/api/fairedepot", name="fairedepot", methods={"POST"})
      * @IsGranted({"ROLE_ADMIN", "ROLE_SUPER_ADMIN","ROLE_CAISSIER" })
      */
     public function faireDepot(Request $request, EntityManagerInterface $manager,CompteRepository $compteRepository)
@@ -34,9 +35,10 @@ class DepotController extends AbstractController
         ##### Faire un depot ####
 
         $values = json_decode($request->getContent());
-        if(isset($values->numCompte, $values->montant)) {
+        if(isset($values)) 
+        {
             $compte = $compteRepository->findOneBy(array('numCompte'=> $values->numCompte));
-        if($compte)
+            if($compte)
         {
             $depot->setMontant($values->montant)
                 ->setUserDepot($userDepot)
@@ -64,11 +66,13 @@ class DepotController extends AbstractController
                 return new JsonResponse($data, 500);
             }
         }else{
-            $data = [
-                'status' => 500,
-                'message' => 'Veuillez saisir le numéro de compte et le montant . '];
-    
-                return new JsonResponse($data, 500);
-            }
+        $data = [
+            'status' => 500,
+            'message' => 'Veuillez saisir le numéro de compte et le montant . '];
+
+            return new JsonResponse($data, 500);
+        }
     }
+ 
+    
 }

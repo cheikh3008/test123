@@ -34,19 +34,9 @@ class ListPartenaireController extends AbstractController
         {
             $liste = $user->findByPartenaire();
         }
-        elseif($roleUser  === "ROLE_PARTENAIRE")
-        {
-        	$partenaire_id = $userConnecte->getPartenaire()->getId();
-            $liste = $user->findUsersByPartenaire($partenaire_id);
-        }
-        elseif($roleUser  === "ROLE_ADMIN_PARTENAIRE")
-        {
-        	$partenaire_id = $userConnecte->getPartenaire()->getId();
-            $liste = $user->findUsersByAdminPartenaire($partenaire_id);
-        }
         else
         {
-            return new Response('Votre role de vous permet aps de lister des ulisateurs', 200, [
+            return new Response('Votre role de vous permet aps de lister des ulisateurs', 500, [
                 'Content-Type' => 'application/json'
             ]);
            

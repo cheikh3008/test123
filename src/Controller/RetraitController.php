@@ -23,7 +23,6 @@ class RetraitController extends AbstractController
     }
     /**
      *@Route("/api/transaction/retrait", name="retrait", methods={"POST"})
-     *@IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE", "ROLE_USER_CAISSIER"})
      */
     public function retrait(Request $request,EntityManagerInterface $manager, AffectationRepository $affectationRepository, CompteRepository $compteRipo, TransactionRepository $transactionRepository)
     {   

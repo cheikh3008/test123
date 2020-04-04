@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
     public function findUsersBySupAdmin()
     {
     return $this->getEntityManager()
-        ->createQuery('SELECT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
+        ->createQuery('SELECT DISTINCT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
         FROM App\Entity\User U , App\Entity\Role R
         WHERE U.role = R.id AND R.libelle IN (\'ROLE_ADMIN\',\'ROLE_CAISSIER\') ' 
         )->getResult();
@@ -32,7 +32,7 @@ class UserRepository extends ServiceEntityRepository
     public function findUsersByAdmin()
     {
     return $this->getEntityManager()
-        ->createQuery('SELECT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
+        ->createQuery('SELECT DISTINCT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
         FROM App\Entity\User U , App\Entity\Role R
         WHERE U.role = R.id AND R.libelle IN (\'ROLE_CAISSIER\') ' 
         )->getResult();
@@ -40,30 +40,36 @@ class UserRepository extends ServiceEntityRepository
     public function findByPartenaire()
     {
     return $this->getEntityManager()
-        ->createQuery('SELECT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle, P.ninea , P.rc 
+        ->createQuery('SELECT DISTINCT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle, P.ninea , P.rc 
         FROM App\Entity\User U , App\Entity\Role R , App\Entity\Partenaire P
         WHERE U.role = R.id AND R.libelle IN (\'ROLE_PARTENAIRE\') AND U.partenaire = P.id
-        .' 
+        ' 
         )->getResult();
     }
     public function findUsersByPartenaire($id)
     {
     return $this->getEntityManager()
-        ->createQuery('SELECT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
+        ->createQuery('SELECT  DISTINCT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
         FROM App\Entity\User U , App\Entity\Role R
         WHERE U.role = R.id AND R.libelle IN (\'ROLE_ADMIN_PARTENAIRE\',\'ROLE_USER_PARTENAIRE\') AND U.partenaire = '.$id
         )->getResult();
     }
     public function findUsersByAdminPartenaire($id)
     {
-    return $this->getEntityManager()
-        ->createQuery('SELECT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
-        FROM App\Entity\User U , App\Entity\Role R
-        WHERE U.role = R.id AND R.libelle IN (\'ROLE_USER_PARTENAIRE\') AND U.partenaire = '.$id
+        return $this->getEntityManager()
+                ->createQuery('SELECT DISTINCT U.id , U.prenom, U.nom,  U.email , U.isActive ,R.libelle
+                FROM App\Entity\User U , App\Entity\Role R
+                WHERE U.role = R.id AND R.libelle IN (\'ROLE_USER_PARTENAIRE\') AND U.partenaire = '.$id
         )->getResult();
     }
-    
-    
+
+    public function findByEmail()
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT DISTINCT U.email 
+            FROM App\Entity\User U ' 
+        )->getResult();
+    }
     
 
 }

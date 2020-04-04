@@ -18,7 +18,15 @@ class CompteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Compte::class);
     }
-
+    
+    public function findByNumCompte($numCompte)
+    {
+        return $this->getEntityManager()
+        ->createQuery('SELECT DISTINCT U.prenom, U.nom,  U.email , P.ninea, P.rc, C.numCompte, C.solde
+        FROM App\Entity\User U , App\Entity\Role R,  App\Entity\Partenaire P,  App\Entity\Compte C
+        WHERE U.role = R.id AND R.libelle IN (\'ROLE_PARTENAIRE\') AND U.partenaire = C.partenaire AND C.partenaire = P.id AND C.numCompte = '.$numCompte
+        )->getResult();
+    }
     // /**
     //  * @return Compte[] Returns an array of Compte objects
     //  */

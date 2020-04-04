@@ -4,9 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format'], ['variable', '/', '\\d+', 'code'], ['text', '/_error']], [], []],
+    'add_user_partenaire' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::listUser'], [], [['text', '/api/list/user/partenaire']], [], []],
     'affectation' => [[], ['_controller' => 'App\\Controller\\AffectationController::affectation'], [], [['text', '/api/affectation']], [], []],
     'bloquer_partenaire' => [['id'], ['_controller' => 'App\\Controller\\BloquerPartenaireController::bloquer'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/api/bloquer']], [], []],
-    'depot' => [[], ['_controller' => 'App\\Controller\\DepotController::faireDepot'], [], [['text', '/api/fairedepot']], [], []],
+    'fairedepot' => [[], ['_controller' => 'App\\Controller\\DepotController::faireDepot'], [], [['text', '/api/fairedepot']], [], []],
     'status' => [['id'], ['_controller' => 'App\\Controller\\DesableUserController::status'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/api/users/status']], [], []],
     'envoi' => [[], ['_controller' => 'App\\Controller\\EnvoiController::envoi'], [], [['text', '/api/transaction/envoi']], [], []],
     'list_compte' => [[], ['_controller' => 'App\\Controller\\ListCompteController::showCompte'], [], [['text', '/api/list/comptes']], [], []],
@@ -14,7 +15,8 @@ return [
     'list_partenaire' => [[], ['_controller' => 'App\\Controller\\ListPartenaireController::showPartenaire'], [], [['text', '/api/list/partenaires']], [], []],
     'list_roles' => [[], ['_controller' => 'App\\Controller\\ListRoleController::showRole'], [], [['text', '/api/list/roles']], [], []],
     'list_users' => [[], ['_controller' => 'App\\Controller\\ListUsersController::showUser'], [], [['text', '/api/list/users']], [], []],
-    'new_compte' => [[], ['_controller' => 'App\\Controller\\NewCompteController::newCompte'], [], [['text', '/api/new/compte']], [], []],
+    'new_compte' => [[], ['_controller' => 'App\\Controller\\NewCompteController::comptePartenaireNew'], [], [['text', '/api/compte/partenaire/new']], [], []],
+    'existant_compte' => [[], ['_controller' => 'App\\Controller\\NewCompteController::comptePartenaireExistant'], [], [['text', '/api/compte/partenaire/existant']], [], []],
     'retrait' => [[], ['_controller' => 'App\\Controller\\RetraitController::retrait'], [], [['text', '/api/transaction/retrait']], [], []],
     'api_entrypoint' => [['index', '_format'], ['_controller' => 'api_platform.action.entrypoint', '_format' => '', '_api_respond' => 'true', 'index' => 'index'], ['index' => 'index'], [['variable', '.', '[^/]++', '_format'], ['variable', '/', 'index', 'index'], ['text', '/api']], [], []],
     'api_doc' => [['_format'], ['_controller' => 'api_platform.action.documentation', '_format' => '', '_api_respond' => 'true'], [], [['variable', '.', '[^/]++', '_format'], ['text', '/api/docs']], [], []],
@@ -74,4 +76,8 @@ return [
     'api_contrats_patch_item' => [['id', '_format'], ['_controller' => 'api_platform.action.patch_item', '_format' => null, '_api_resource_class' => 'App\\Entity\\Contrat', '_api_item_operation_name' => 'patch'], [], [['variable', '.', '[^/]++', '_format'], ['variable', '/', '[^/\\.]++', 'id'], ['text', '/api/contrats']], [], []],
     'login_check' => [[], [], [], [['text', '/api/login_check']], [], []],
     'swagger_ui' => [[], ['_controller' => 'api_platform.swagger.action.ui'], [], [['text', '/docs']], [], []],
+    'addUserPartenaire' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::addUser'], [], [['text', '/api/user/partenaire']], [], []],
+    'rechercheCode' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheCode'], [], [['text', '/api/recherche/code']], [], []],
+    'rechercheNinea' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheNinea'], [], [['text', '/api/recherche/ninea']], [], []],
+    'rechercheNumeroCompte' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheNumeroCompte'], [], [['text', '/api/recherche/numero']], [], []],
 ];

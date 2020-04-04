@@ -19,6 +19,13 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
+    public function findByCode($code)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT DISTINCT T.prenomE, T.nomE, T.telephoneE, T.npieceE, T.prenomB, T.nomB, T.telephoneB,T.montant  FROM App\Entity\Transaction T
+            WHERE  T.code = '.$code
+        )->getResult();
+    }
     // /**
     //  * @return Transaction[] Returns an array of Transaction objects
     //  */

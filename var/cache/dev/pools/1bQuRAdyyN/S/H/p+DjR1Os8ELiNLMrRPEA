@@ -16,7 +16,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             ],
             'methods' => [
                 [
-                    'PUT',
+                    'GET',
                 ],
             ],
         ],

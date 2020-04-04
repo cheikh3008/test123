@@ -8,18 +8,24 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/api/list/user/partenaire' => [[['_route' => 'add_user_partenaire', '_controller' => 'App\\Controller\\AddUserPartenaireController::listUser'], null, ['GET' => 0], null, false, false, null]],
         '/api/affectation' => [[['_route' => 'affectation', '_controller' => 'App\\Controller\\AffectationController::affectation'], null, ['POST' => 0], null, false, false, null]],
-        '/api/fairedepot' => [[['_route' => 'depot', '_controller' => 'App\\Controller\\DepotController::faireDepot'], null, ['POST' => 0], null, false, false, null]],
+        '/api/fairedepot' => [[['_route' => 'fairedepot', '_controller' => 'App\\Controller\\DepotController::faireDepot'], null, ['POST' => 0], null, false, false, null]],
         '/api/transaction/envoi' => [[['_route' => 'envoi', '_controller' => 'App\\Controller\\EnvoiController::envoi'], null, ['POST' => 0], null, false, false, null]],
         '/api/list/comptes' => [[['_route' => 'list_compte', '_controller' => 'App\\Controller\\ListCompteController::showCompte'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/depots' => [[['_route' => 'list_depots', '_controller' => 'App\\Controller\\ListDepotController::showDepot'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/partenaires' => [[['_route' => 'list_partenaire', '_controller' => 'App\\Controller\\ListPartenaireController::showPartenaire'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/roles' => [[['_route' => 'list_roles', '_controller' => 'App\\Controller\\ListRoleController::showRole'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/users' => [[['_route' => 'list_users', '_controller' => 'App\\Controller\\ListUsersController::showUser'], null, ['GET' => 0], null, false, false, null]],
-        '/api/new/compte' => [[['_route' => 'new_compte', '_controller' => 'App\\Controller\\NewCompteController::newCompte'], null, ['POST' => 0], null, false, false, null]],
+        '/api/compte/partenaire/new' => [[['_route' => 'new_compte', '_controller' => 'App\\Controller\\NewCompteController::comptePartenaireNew'], null, ['POST' => 0], null, false, false, null]],
+        '/api/compte/partenaire/existant' => [[['_route' => 'existant_compte', '_controller' => 'App\\Controller\\NewCompteController::comptePartenaireExistant'], null, ['POST' => 0], null, false, false, null]],
         '/api/transaction/retrait' => [[['_route' => 'retrait', '_controller' => 'App\\Controller\\RetraitController::retrait'], null, ['POST' => 0], null, false, false, null]],
         '/api/login_check' => [[['_route' => 'login_check'], null, ['POST' => 0], null, false, false, null]],
         '/docs' => [[['_route' => 'swagger_ui', '_controller' => 'api_platform.swagger.action.ui'], null, null, null, false, false, null]],
+        '/api/user/partenaire' => [[['_route' => 'addUserPartenaire', '_controller' => 'App\\Controller\\AddUserPartenaireController::addUser'], null, ['POST' => 0], null, false, false, null]],
+        '/api/recherche/code' => [[['_route' => 'rechercheCode', '_controller' => 'App\\Controller\\RechercheController::rechercheCode'], null, ['POST' => 0], null, false, false, null]],
+        '/api/recherche/ninea' => [[['_route' => 'rechercheNinea', '_controller' => 'App\\Controller\\RechercheController::rechercheNinea'], null, ['POST' => 0], null, false, false, null]],
+        '/api/recherche/numero' => [[['_route' => 'rechercheNumeroCompte', '_controller' => 'App\\Controller\\RechercheController::rechercheNumeroCompte'], null, ['POST' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
@@ -119,7 +125,7 @@ return [
     ],
     [ // $dynamicRoutes
         35 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-        69 => [[['_route' => 'bloquer_partenaire', '_controller' => 'App\\Controller\\BloquerPartenaireController::bloquer'], ['id'], ['PUT' => 0], null, false, true, null]],
+        69 => [[['_route' => 'bloquer_partenaire', '_controller' => 'App\\Controller\\BloquerPartenaireController::bloquer'], ['id'], ['GET' => 0], null, false, true, null]],
         97 => [[['_route' => 'status', '_controller' => 'App\\Controller\\DesableUserController::status'], ['id'], ['GET' => 0], null, false, true, null]],
         133 => [[['_route' => 'api_entrypoint', '_controller' => 'api_platform.action.entrypoint', '_format' => '', '_api_respond' => 'true', 'index' => 'index'], ['index', '_format'], null, null, false, true, null]],
         167 => [[['_route' => 'api_doc', '_controller' => 'api_platform.action.documentation', '_format' => '', '_api_respond' => 'true'], ['_format'], null, null, false, true, null]],

@@ -9,10 +9,10 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
     [
         'Symfony\\Component\\Routing\\Annotation\\Route' => [
             'path' => [
-                'api/fairedepot',
+                '/api/fairedepot',
             ],
             'name' => [
-                'depot',
+                'fairedepot',
             ],
             'methods' => [
                 [

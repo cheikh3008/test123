@@ -366,6 +366,15 @@
     <service id="kernel" class="App\Kernel" public="true" synthetic="true">
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Controller\AddUserPartenaireController" class="App\Controller\AddUserPartenaireController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.user_password_encoder.generic"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\AddUserPartenaireController"/>
+      </call>
+    </service>
     <service id="App\Controller\AffectationController" class="App\Controller\AffectationController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -451,6 +460,13 @@
       <argument type="service" id="security.token_storage"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.vdmMuyE.App\Controller\NewCompteController"/>
+      </call>
+    </service>
+    <service id="App\Controller\RechercheController" class="App\Controller\RechercheController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\RechercheController"/>
       </call>
     </service>
     <service id="App\Controller\RetraitController" class="App\Controller\RetraitController" public="true" autowire="true" autoconfigure="true">
@@ -2190,14 +2206,6 @@
         <argument>2048</argument>
       </call>
       <call method="addListener">
-        <argument>console.command</argument>
-        <argument type="collection">
-          <argument type="service" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
         <argument>kernel.request</argument>
         <argument type="collection">
           <argument type="service" id="router_listener"/>
@@ -2871,6 +2879,9 @@
       <call method="addPath">
         <argument>/home/cheikhdieng/Bureau/money_transfer/samamoney/vendor/api-platform/core/src/Bridge/Symfony/Bundle/Resources/views</argument>
         <argument>!ApiPlatform</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/cheikhdieng/Bureau/money_transfer/samamoney/templates</argument>
       </call>
     </service>
     <service id="twig.loader.chain" class="Twig\Loader\ChainLoader" public="false"/>
@@ -5290,6 +5301,9 @@
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter" public="false">
       <argument type="service" id="argument_metadata_factory"/>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AddUserPartenaireController" class="App\Controller\AddUserPartenaireController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AddUserPartenaireController" class="App\Controller\AddUserPartenaireController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\AddUserPartenaireController" class="App\Controller\AddUserPartenaireController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AffectationController" class="App\Controller\AffectationController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AffectationController" class="App\Controller\AffectationController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\AffectationController" class="App\Controller\AffectationController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5323,6 +5337,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\NewCompteController" class="App\Controller\NewCompteController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\NewCompteController" class="App\Controller\NewCompteController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\NewCompteController" class="App\Controller\NewCompteController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RechercheController" class="App\Controller\RechercheController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RechercheController" class="App\Controller\RechercheController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\RechercheController" class="App\Controller\RechercheController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RetraitController" class="App\Controller\RetraitController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RetraitController" class="App\Controller\RetraitController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\RetraitController" class="App\Controller\RetraitController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5535,12 +5552,27 @@
         <argument>make:migration</argument>
       </call>
     </service>
-    <service id=".service_locator.uSIPTg." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.wrHuSEu" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="roleRepo" type="service" id="App\Repository\RoleRepository"/>
+        <argument key="userRepository" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.yE7xP99" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="serializer" type="service" id="serializer"/>
+        <argument key="user" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.MH3tuPQ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="affect" type="service" id="App\Repository\AffectationRepository"/>
         <argument key="compteRepository" type="service" id="App\Repository\CompteRepository"/>
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
-        <argument key="partenaireRepository" type="service" id="App\Repository\PartenaireRepository"/>
         <argument key="serializer" type="service" id="serializer"/>
         <argument key="user" type="service" id="App\Repository\UserRepository"/>
       </argument>
@@ -5582,13 +5614,6 @@
         <argument key="serializer" type="service" id="serializer"/>
       </argument>
     </service>
-    <service id=".service_locator.yE7xP99" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="serializer" type="service" id="serializer"/>
-        <argument key="user" type="service" id="App\Repository\UserRepository"/>
-      </argument>
-    </service>
     <service id=".service_locator.ifF4zxJ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5596,13 +5621,43 @@
         <argument key="serializer" type="service" id="serializer"/>
       </argument>
     </service>
-    <service id=".service_locator.UQjV4MW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.WYC2NxH" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
         <argument key="partenaireRepository" type="service" id="App\Repository\PartenaireRepository"/>
         <argument key="passwordEncode" type="service" id="security.user_password_encoder.generic"/>
         <argument key="roleRepository" type="service" id="App\Repository\RoleRepository"/>
+        <argument key="serializer" type="service" id="serializer"/>
+        <argument key="userRepository" type="service" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.lJQ5fRT" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="manager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="partenaireRepository" type="service" id="App\Repository\PartenaireRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.UuaU.i_" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="partenaireRepository" type="service" id="App\Repository\PartenaireRepository"/>
+        <argument key="serializer" type="service" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.aJCo07." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="serializer" type="service" id="serializer"/>
+        <argument key="transactionRepository" type="service" id="App\Repository\TransactionRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.aRojnoh" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="compteRepository" type="service" id="App\Repository\CompteRepository"/>
+        <argument key="serializer" type="service" id="serializer"/>
       </argument>
     </service>
     <service id=".service_locator.AMlEwRt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -5614,10 +5669,12 @@
         <argument key="transactionRepository" type="service" id="App\Repository\TransactionRepository"/>
       </argument>
     </service>
-    <service id=".service_locator._ZdCYac" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.HIPngZ1" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Controller\AffectationController::affectation" type="service" id=".service_locator.uSIPTg."/>
+        <argument key="App\Controller\AddUserPartenaireController::addUser" type="service" id=".service_locator.wrHuSEu"/>
+        <argument key="App\Controller\AddUserPartenaireController::listUser" type="service" id=".service_locator.yE7xP99"/>
+        <argument key="App\Controller\AffectationController::affectation" type="service" id=".service_locator.MH3tuPQ"/>
         <argument key="App\Controller\BloquerPartenaireController::bloquer" type="service" id=".service_locator.potYjJM"/>
         <argument key="App\Controller\DepotController::faireDepot" type="service" id=".service_locator.1X4qUef"/>
         <argument key="App\Controller\DesableUserController::status" type="service" id=".service_locator.potYjJM"/>
@@ -5627,9 +5684,15 @@
         <argument key="App\Controller\ListPartenaireController::showPartenaire" type="service" id=".service_locator.yE7xP99"/>
         <argument key="App\Controller\ListRoleController::showRole" type="service" id=".service_locator.ifF4zxJ"/>
         <argument key="App\Controller\ListUsersController::showUser" type="service" id=".service_locator.yE7xP99"/>
-        <argument key="App\Controller\NewCompteController::newCompte" type="service" id=".service_locator.UQjV4MW"/>
+        <argument key="App\Controller\NewCompteController::comptePartenaireExistant" type="service" id=".service_locator.lJQ5fRT"/>
+        <argument key="App\Controller\NewCompteController::comptePartenaireNew" type="service" id=".service_locator.WYC2NxH"/>
+        <argument key="App\Controller\RechercheController::rechercheCode" type="service" id=".service_locator.aJCo07."/>
+        <argument key="App\Controller\RechercheController::rechercheNinea" type="service" id=".service_locator.UuaU.i_"/>
+        <argument key="App\Controller\RechercheController::rechercheNumeroCompte" type="service" id=".service_locator.aRojnoh"/>
         <argument key="App\Controller\RetraitController::retrait" type="service" id=".service_locator.AMlEwRt"/>
-        <argument key="App\Controller\AffectationController:affectation" type="service" id=".service_locator.uSIPTg."/>
+        <argument key="App\Controller\AddUserPartenaireController:addUser" type="service" id=".service_locator.wrHuSEu"/>
+        <argument key="App\Controller\AddUserPartenaireController:listUser" type="service" id=".service_locator.yE7xP99"/>
+        <argument key="App\Controller\AffectationController:affectation" type="service" id=".service_locator.MH3tuPQ"/>
         <argument key="App\Controller\BloquerPartenaireController:bloquer" type="service" id=".service_locator.potYjJM"/>
         <argument key="App\Controller\DepotController:faireDepot" type="service" id=".service_locator.1X4qUef"/>
         <argument key="App\Controller\DesableUserController:status" type="service" id=".service_locator.potYjJM"/>
@@ -5639,7 +5702,11 @@
         <argument key="App\Controller\ListPartenaireController:showPartenaire" type="service" id=".service_locator.yE7xP99"/>
         <argument key="App\Controller\ListRoleController:showRole" type="service" id=".service_locator.ifF4zxJ"/>
         <argument key="App\Controller\ListUsersController:showUser" type="service" id=".service_locator.yE7xP99"/>
-        <argument key="App\Controller\NewCompteController:newCompte" type="service" id=".service_locator.UQjV4MW"/>
+        <argument key="App\Controller\NewCompteController:comptePartenaireExistant" type="service" id=".service_locator.lJQ5fRT"/>
+        <argument key="App\Controller\NewCompteController:comptePartenaireNew" type="service" id=".service_locator.WYC2NxH"/>
+        <argument key="App\Controller\RechercheController:rechercheCode" type="service" id=".service_locator.aJCo07."/>
+        <argument key="App\Controller\RechercheController:rechercheNinea" type="service" id=".service_locator.UuaU.i_"/>
+        <argument key="App\Controller\RechercheController:rechercheNumeroCompte" type="service" id=".service_locator.aRojnoh"/>
         <argument key="App\Controller\RetraitController:retrait" type="service" id=".service_locator.AMlEwRt"/>
       </argument>
     </service>
@@ -5774,6 +5841,12 @@
         <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\AddUserPartenaireController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\AddUserPartenaireController"/>
+      <argument>App\Controller\AddUserPartenaireController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
+    </service>
     <service id=".service_locator.vdmMuyE.App\Controller\AffectationController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\AffectationController"/>
       <argument>App\Controller\AffectationController</argument>
@@ -5837,6 +5910,12 @@
     <service id=".service_locator.vdmMuyE.App\Controller\NewCompteController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\NewCompteController"/>
       <argument>App\Controller\NewCompteController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
+    </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\RechercheController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\RechercheController"/>
+      <argument>App\Controller\RechercheController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.vdmMuyE" method="withContext"/>
     </service>
@@ -5999,12 +6078,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator._ZdCYac"/>
+      <argument type="service" id=".service_locator.HIPngZ1"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator._ZdCYac"/>
+      <argument type="service" id=".service_locator.HIPngZ1"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -6408,7 +6487,7 @@
     <service id="sensio_framework_extra.security.expression_language" alias="sensio_framework_extra.security.expression_language.default" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator._ZdCYac"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.HIPngZ1"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>

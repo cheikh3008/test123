@@ -19,7 +19,7 @@ class BloquerPartenaireController extends AbstractController
         $this->tokenStorage = $tokenStorage;
     }
     /**
-     * @Route("/api/bloquer/{id}", name="bloquer_partenaire", methods={"PUT"})
+     * @Route("/api/bloquer/{id}", name="bloquer_partenaire", methods={"GET"})
      * @IsGranted({"ROLE_ADMIN_SYSTEM" ,"ROLE_ADMIN"})
      */
    public function bloquer (Request $request, EntityManagerInterface $manager, UserRepository $userRepository,$id)
@@ -30,24 +30,22 @@ class BloquerPartenaireController extends AbstractController
         $partenaire_id = $userRepository->find($id);
         ##### Récupération des utlisateurs du partenaire  #######
         $partenaire = $userRepository->findBy(array("partenaire" => $partenaire_id->getPartenaire()));
+        $dataPartenaire = $userRepository->findOneBy(array("partenaire" => $partenaire_id->getPartenaire()));
         ##### Bloquer le partenaire et es utlisateurs #######
+        $status = '';
         if($partenaire_id->getIsActive() === true)
         {
             foreach ($partenaire as $result)
             {
                 if($result->getPartenaire()){
-                    $result->setIsActive($values->isActive);
+                    $status = 'bloquer';
+                    $result->setIsActive(false);
                     $manager->persist($result);
-                    $manager->flush();
+                
                 }
             
             }
-            $data = [
-                'status' => 201,
-                'message' => 'Le blocage du partenaires et ses utilisateurs a réussi avec sucess ...  ' 
-            ];
-
-            return new JsonResponse($data, 201);
+            
         }
         ##### Bloquer le partenaire et es utlisateurs #######
         else{
@@ -55,18 +53,20 @@ class BloquerPartenaireController extends AbstractController
             {
                 if($result->getPartenaire())
                 {
-                    $result->setIsActive($values->isActive);
-                    $manager->persist($result);
-                    $manager->flush();
+                    $status = 'débloquer';
+                    $result->setIsActive(true);
+                    
                 }
             
             }
-            $data = [
-                'status' => 201,
-                'message' => 'Le déblocage du partenaires et ses utilisateurs a réussi avec sucess ...  ' 
-            ];
-
-            return new JsonResponse($data, 201);
+            
         }
+        $manager->persist($result);
+        $manager->flush();
+        $data  =[
+            'status'=>200,
+            'message'=> $dataPartenaire->getPrenom().' - '. $dataPartenaire->getNom().' - '. $dataPartenaire->getEmail().' est '. $status. ' et ses utlisatuers.'
+        ];
+        return $this->json($data, 200);
     }
 }

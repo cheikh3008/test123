@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
- * @UniqueEntity("ninea" , message="ce ninea de compte email existe déja.")
+ * @UniqueEntity("ninea" , message="ce ninea existe déja.")
  */
 class Partenaire
 {
@@ -36,7 +36,7 @@ class Partenaire
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  @Assert\NotBlank(message = "Veuillez remplir ce champ")
+     * @Assert\NotBlank(message = "Veuillez remplir ce champ")
      * @Groups({"compte"})
      */
     private $rc;

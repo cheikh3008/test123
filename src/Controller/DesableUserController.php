@@ -21,12 +21,12 @@ class DesableUserController extends AbstractController
         $status = '';
         if ($user->getIsActive()=== true)
         {
-            $status = 'desactiver';
+            $status = 'débloquer';
             $user->setIsActive(false);
         }
         else
         {
-            $status = 'activer';
+            $status = 'bloquer';
             $user->setIsActive(true);
         }
         $manager->persist($user);

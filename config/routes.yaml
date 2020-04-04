@@ -8,3 +8,19 @@ login_check:
 swagger_ui:
     path: /docs
     controller: api_platform.swagger.action.ui
+addUserPartenaire:
+    path: /api/user/partenaire
+    methods:  [POST]
+    controller: App\Controller\AddUserPartenaireController::addUser
+rechercheCode:
+    path: /api/recherche/code
+    methods:  [POST]
+    controller: App\Controller\RechercheController::rechercheCode
+rechercheNinea:
+    path: /api/recherche/ninea
+    methods:  [POST]
+    controller: App\Controller\RechercheController::rechercheNinea
+rechercheNumeroCompte:
+    path: /api/recherche/numero
+    methods:  [POST]
+    controller: App\Controller\RechercheController::rechercheNumeroCompte

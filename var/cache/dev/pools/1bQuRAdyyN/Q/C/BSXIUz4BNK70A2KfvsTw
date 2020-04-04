@@ -13,7 +13,7 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
                 1 => 'App\\Repository\\PartenaireRepository',
             ],
             'message' => [
-                2 => 'ce ninea de compte email existe déja.',
+                2 => 'ce ninea existe déja.',
             ],
             'fields' => [
                 2 => 'ninea',
