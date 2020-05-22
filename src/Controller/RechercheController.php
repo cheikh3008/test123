@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CompteRepository;
 use App\Repository\PartenaireRepository;
+use App\Repository\AffectationRepository;
 use App\Repository\TransactionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\CompteRepository;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RechercheController extends AbstractController
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+
+    }
    /*
     Méthode qui permet de chercher par ninea
    */
@@ -35,7 +44,7 @@ class RechercheController extends AbstractController
             {
                 $data = [
                     'status' => 500,
-                    'message' => 'Le ninea n\'exixte pas . '];
+                    'message' => 'Le ninea n\'existe pas . '];
         
                 return new JsonResponse($data, 500);
             }
@@ -72,7 +81,7 @@ class RechercheController extends AbstractController
             {
                 $data = [
                     'status' => 500,
-                    'message' => 'Le code n\'exixte pas . '];
+                    'message' => 'Le code n\'existe pas . '];
         
                 return new JsonResponse($data, 500);
             }
@@ -95,7 +104,7 @@ class RechercheController extends AbstractController
   public function rechercheNumeroCompte(Request $request,CompteRepository $compteRepository, SerializerInterface $serializer) 
   {
     $values = json_decode($request->getContent());
-    if($values->numCompte)
+    if($values)
     {
         $compte = $compteRepository->findByNumCompte($values->numCompte);
         if($compte)
@@ -110,7 +119,7 @@ class RechercheController extends AbstractController
         {
             $data = [
                 'status' => 500,
-                'message' => 'Le numéro de compte n\'exixte pas . '];
+                'message' => 'Le numéro de compte n\'existe pas . '];
     
             return new JsonResponse($data, 500);
         }
@@ -125,5 +134,30 @@ class RechercheController extends AbstractController
     }
     
     }
-
+    /**
+     * Méthode qui affiche les infos du compte
+     */
+    public function getInfosCompte(AffectationRepository $affectationRepository, CompteRepository $compteRipo, SerializerInterface $serializer) 
+    {
+        $userEnvoi = $this->tokenStorage->getToken()->getUser();
+        $userAffcete = $affectationRepository->findOneBy(array("user"=>$userEnvoi));
+        #### Vérifie si l'utlisateur est affecté à un commpte ####
+        if($userAffcete)
+        {
+            $compte = $userAffcete->getCompte();
+            $compte = $compteRipo->findOneBy(array("id"=>$compte));
+            $data [] = [
+                'numCompte' => $compte->getNumCompte(),
+                'solde' => $compte->getSolde()
+            ];
+            $result = $serializer->serialize($data, 'json');
+        
+            return new Response($result, 200, [
+                'Content-Type' => 'application/json'
+            ]);
+        }
+        else{
+            return new Response('');
+        }
+    }
 }
