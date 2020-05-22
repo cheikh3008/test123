@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-//require '../src/Osms.php';
-
 use App\Osms;
 use App\Entity\Transaction;
 use App\Repository\TarifRepository;
@@ -11,8 +9,10 @@ use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AffectationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -28,9 +28,8 @@ class EnvoiController extends AbstractController
     }
     /**
      * @Route("/api/transaction/envoi", name="envoi", methods={"POST"})
-     * @IsGranted({"ROLE_PARTENAIRE" ,"ROLE_ADMIN_PARTENAIRE", "ROLE_USER_PARTENAIRE"})
      */
-    public function envoi(Request $request,EntityManagerInterface $manager, AffectationRepository           $affectationRepository, CompteRepository $compteRipo, TarifRepository $tarifRepository)    {
+    public function envoi(Request $request,EntityManagerInterface $manager, AffectationRepository $affectationRepository, CompteRepository $compteRipo, TarifRepository $tarifRepository, SerializerInterface $serializer)    {
         $userEnvoi = $this->tokenStorage->getToken()->getUser();
         $values = json_decode($request->getContent());
 
@@ -44,7 +43,6 @@ class EnvoiController extends AbstractController
             {
                 $compte = $userAffcete->getCompte();
                 $compte = $compteRipo->findOneBy(array("id"=>$compte));
-                
             }
             
             #### Vérifie si l'utlisateur est partenaire ou admin partenaire ####
@@ -84,11 +82,11 @@ class EnvoiController extends AbstractController
             if($values->montant > $compte->getSolde())
             {
             $data = [
-                'status' => 201,
+                'status' => 500,
                 'message' => "Opération échouée, le solde est insuffisant ... "
             ];
     
-                return new JsonResponse($data, 201);
+                return new JsonResponse($data, 500);
             }
             #### Calcul des parts pour chaque partie (etat, systeme, envoi, retrait) ####
             $comEtat = $frais * 30/100;
@@ -125,11 +123,25 @@ class EnvoiController extends AbstractController
             $manager->flush();
                         
             
-            $data = [
-            'status' => 201,
-            'message' => 'Vous avez enoyé '.$values->montant. ' à '. $values->prenomE.' - '. $values->nomE .' - ' ];
+            $data [] = [
+            'prenomE' => $envoi->getPrenomE(),
+            'nomE' => $envoi->getNomE(),
+            'telephoneE' => $envoi->getTelephoneE(),
+            'npieceE' => $envoi->getNpieceE(),
+            'prenomB' => $envoi->getPrenomB(),
+            'nomB' => $envoi->getNomB(),
+            'telephoneB' => $envoi->getTelephoneB(),
+            'montant' => $envoi->getMontant(),
+            'frais' => $envoi->getFrais(),
+            'dateEnvoi' => $envoi->getDateEnvoi(),
+            'code' => $envoi->getCode(),
+            ];
 
-            return new JsonResponse($data, 201);
+            $result = $serializer->serialize($data, 'json');
+        
+            return new Response($result, 200, [
+                'Content-Type' => 'application/json'
+            ]);
         }
         else
         {
@@ -142,5 +154,6 @@ class EnvoiController extends AbstractController
         }
        
     }
+    
     
 }

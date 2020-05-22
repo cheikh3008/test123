@@ -40,7 +40,7 @@ class ListUsersController extends AbstractController
         }
         else
         {
-            return new Response('Votre role de vous permet aps de lister des ulisateurs', 200, [
+            return new Response('Votre role de vous permet aps de lister des ulisateurs', 500, [
                 'Content-Type' => 'application/json'
             ]);
            

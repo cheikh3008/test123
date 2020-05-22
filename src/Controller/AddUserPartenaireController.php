@@ -26,7 +26,10 @@ class AddUserPartenaireController extends AbstractController
         $this->encoder = $encoder;
         
     }
-    
+    /**
+     * Methode qui ajoutte les users partenaire par admin_partenaire ou partenaire
+     * route: /api/list/user/partenaire/affectation
+     */
     public function addUser(Request $request, EntityManagerInterface $manager, RoleRepository $roleRepo, UserRepository $userRepository)
     {
         $values = json_decode($request->getContent());
@@ -71,9 +74,8 @@ class AddUserPartenaireController extends AbstractController
 
     /**
      * @Route("/api/list/user/partenaire", name="add_user_partenaire", methods={"GET"})
-    *  @IsGranted({"ROLE_PARTENAIRE", "ROLE_ADMIN_PARTENAIRE" })
     */
-    public function listUser(SerializerInterface $serializer,UserRepository $user)
+    public function listUserPartenaire(SerializerInterface $serializer,UserRepository $user)
     {
         $userConnecte = $this->tokenStorage->getToken()->getUser();
         $roleUser = $userConnecte->getRole()->getLibelle();
@@ -84,6 +86,35 @@ class AddUserPartenaireController extends AbstractController
             $liste = $user->findUsersByPartenaire($partenaire_id);
         }
         elseif($roleUser  === "ROLE_ADMIN_PARTENAIRE")
+        {
+        $partenaire_id = $userConnecte->getPartenaire()->getId();
+            $liste = $user->findUsersByAdminPartenaire($partenaire_id);
+        }
+        else
+        {
+            return new Response('Votre role de vous permet aps de lister des ulisateurs', 500, [
+                'Content-Type' => 'application/json'
+            ]);
+           
+        }
+        $data = $serializer->serialize($liste, 'json');
+        
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+
+
+    }
+    /**
+     * Methode qui liste seulement les les users partenaire par admin_partenaire ou partenaire
+     * route: /api/list/user/partenaire/affectation
+     */
+    public function listUserByaffectation(SerializerInterface $serializer,UserRepository $user)
+    {
+        $userConnecte = $this->tokenStorage->getToken()->getUser();
+        $roleUser = $userConnecte->getRole()->getLibelle();
+        
+        if($roleUser  === "ROLE_PARTENAIRE" || $roleUser  === "ROLE_ADMIN_PARTENAIRE")
         {
         $partenaire_id = $userConnecte->getPartenaire()->getId();
             $liste = $user->findUsersByAdminPartenaire($partenaire_id);

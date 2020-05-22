@@ -8,8 +8,12 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/api/list/user/partenaire' => [[['_route' => 'add_user_partenaire', '_controller' => 'App\\Controller\\AddUserPartenaireController::listUser'], null, ['GET' => 0], null, false, false, null]],
+        '/api/list/user/partenaire' => [[['_route' => 'add_user_partenaire', '_controller' => 'App\\Controller\\AddUserPartenaireController::listUserPartenaire'], null, ['GET' => 0], null, false, false, null]],
         '/api/affectation' => [[['_route' => 'affectation', '_controller' => 'App\\Controller\\AffectationController::affectation'], null, ['POST' => 0], null, false, false, null]],
+        '/api/count' => [[['_route' => 'count', '_controller' => 'App\\Controller\\CountController::compter'], null, ['GET' => 0], null, false, false, null]],
+        '/api/recherche/parts/envois' => [[['_route' => 'parts_envois', '_controller' => 'App\\Controller\\CountController::recherchePartsEnvois'], null, ['POST' => 0], null, false, false, null]],
+        '/api/recherche/parts/retraits' => [[['_route' => 'parts_retraits', '_controller' => 'App\\Controller\\CountController::recherchePartsRetraits'], null, ['POST' => 0], null, false, false, null]],
+        '/api/list/parts' => [[['_route' => 'part_partenaire', '_controller' => 'App\\Controller\\CountController::listerPartPartenaire'], null, ['GET' => 0], null, false, false, null]],
         '/api/fairedepot' => [[['_route' => 'fairedepot', '_controller' => 'App\\Controller\\DepotController::faireDepot'], null, ['POST' => 0], null, false, false, null]],
         '/api/transaction/envoi' => [[['_route' => 'envoi', '_controller' => 'App\\Controller\\EnvoiController::envoi'], null, ['POST' => 0], null, false, false, null]],
         '/api/list/comptes' => [[['_route' => 'list_compte', '_controller' => 'App\\Controller\\ListCompteController::showCompte'], null, ['GET' => 0], null, false, false, null]],
@@ -17,15 +21,19 @@ return [
         '/api/list/partenaires' => [[['_route' => 'list_partenaire', '_controller' => 'App\\Controller\\ListPartenaireController::showPartenaire'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/roles' => [[['_route' => 'list_roles', '_controller' => 'App\\Controller\\ListRoleController::showRole'], null, ['GET' => 0], null, false, false, null]],
         '/api/list/users' => [[['_route' => 'list_users', '_controller' => 'App\\Controller\\ListUsersController::showUser'], null, ['GET' => 0], null, false, false, null]],
+        '/api/list/envois' => [[['_route' => 'liste_envoi', '_controller' => 'App\\Controller\\ListeTransactionController::listeEnvoi'], null, ['GET' => 0], null, false, false, null]],
+        '/api/list/retraits' => [[['_route' => 'liste_retrait', '_controller' => 'App\\Controller\\ListeTransactionController::listeRetrait'], null, ['GET' => 0], null, false, false, null]],
         '/api/compte/partenaire/new' => [[['_route' => 'new_compte', '_controller' => 'App\\Controller\\NewCompteController::comptePartenaireNew'], null, ['POST' => 0], null, false, false, null]],
         '/api/compte/partenaire/existant' => [[['_route' => 'existant_compte', '_controller' => 'App\\Controller\\NewCompteController::comptePartenaireExistant'], null, ['POST' => 0], null, false, false, null]],
         '/api/transaction/retrait' => [[['_route' => 'retrait', '_controller' => 'App\\Controller\\RetraitController::retrait'], null, ['POST' => 0], null, false, false, null]],
         '/api/login_check' => [[['_route' => 'login_check'], null, ['POST' => 0], null, false, false, null]],
         '/docs' => [[['_route' => 'swagger_ui', '_controller' => 'api_platform.swagger.action.ui'], null, null, null, false, false, null]],
         '/api/user/partenaire' => [[['_route' => 'addUserPartenaire', '_controller' => 'App\\Controller\\AddUserPartenaireController::addUser'], null, ['POST' => 0], null, false, false, null]],
+        '/api/list/user/partenaire/affectation' => [[['_route' => 'ListeUserPartenaireByAffection', '_controller' => 'App\\Controller\\AddUserPartenaireController::listUserByaffectation'], null, ['GET' => 0], null, false, false, null]],
         '/api/recherche/code' => [[['_route' => 'rechercheCode', '_controller' => 'App\\Controller\\RechercheController::rechercheCode'], null, ['POST' => 0], null, false, false, null]],
         '/api/recherche/ninea' => [[['_route' => 'rechercheNinea', '_controller' => 'App\\Controller\\RechercheController::rechercheNinea'], null, ['POST' => 0], null, false, false, null]],
         '/api/recherche/numero' => [[['_route' => 'rechercheNumeroCompte', '_controller' => 'App\\Controller\\RechercheController::rechercheNumeroCompte'], null, ['POST' => 0], null, false, false, null]],
+        '/api/get-infos-compte' => [[['_route' => 'rechercheInfosCompte', '_controller' => 'App\\Controller\\RechercheController::getInfosCompte'], null, ['GET' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

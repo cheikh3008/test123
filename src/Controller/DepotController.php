@@ -35,7 +35,7 @@ class DepotController extends AbstractController
         ##### Faire un depot ####
 
         $values = json_decode($request->getContent());
-        if(isset($values)) 
+        if($values)
         {
             $compte = $compteRepository->findOneBy(array('numCompte'=> $values->numCompte));
             if($compte)
@@ -61,11 +61,13 @@ class DepotController extends AbstractController
         }else{
             $data = [
                 'status' => 500,
-                'message' => 'Le numéro de compte n\'exixte pas . '];
+                'message' => 'Le numéro de compte n\'existe pas . '];
     
                 return new JsonResponse($data, 500);
             }
-        }else{
+        }
+        else
+        {
         $data = [
             'status' => 500,
             'message' => 'Veuillez saisir le numéro de compte et le montant . '];

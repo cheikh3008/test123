@@ -12,6 +12,10 @@ addUserPartenaire:
     path: /api/user/partenaire
     methods:  [POST]
     controller: App\Controller\AddUserPartenaireController::addUser
+ListeUserPartenaireByAffection:
+    path: /api/list/user/partenaire/affectation
+    methods:  [GET]
+    controller: App\Controller\AddUserPartenaireController::listUserByaffectation
 rechercheCode:
     path: /api/recherche/code
     methods:  [POST]
@@ -24,3 +28,7 @@ rechercheNumeroCompte:
     path: /api/recherche/numero
     methods:  [POST]
     controller: App\Controller\RechercheController::rechercheNumeroCompte
+rechercheInfosCompte:
+    path: /api/get-infos-compte
+    methods: [GET]
+    controller: App\Controller\RechercheController::getInfosCompte

@@ -25,15 +25,18 @@ class ListDepotController extends AbstractController
     {
         $userConnecte = $this->tokenStorage->getToken()->getUser();
         $roleUser = $userConnecte->getRole()->getLibelle();
-        $partenaire_id = $userConnecte;
-        dd($partenaire_id->getComptes()->getId());
-        dd($depot->findBy(array('compte' => 7 )));
-        
-        if($roleUser === "ROLE_PARTENAIRE" || $roleUser === "ROLE_ADMIN_PARTENAIRE" ){
-            $res = $depot->findBy(array("partenaire" => $partenaire_id));
+       
+       
+        if($roleUser === "ROLE_PARTENAIRE" || $roleUser === "ROLE_ADMIN_PARTENAIRE" )
+        {
+            $partenaire_id = $userConnecte->getPartenaire()->getId();
+            if($partenaire_id)
+            {
+                $res = $depot->findDepotByPartenaire($partenaire_id);
+            }
           
         }elseif ($roleUser === "ROLE_SUPER_ADMIN" || $roleUser === "ROLE_ADMIN") {
-            $res = $depot->findAll();
+            $res = $depot->findAllDepot();
         }
         else{
             $data =  'Votre role de vous permet aps de lister des comptes';

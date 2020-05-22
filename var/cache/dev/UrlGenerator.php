@@ -4,9 +4,13 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format'], ['variable', '/', '\\d+', 'code'], ['text', '/_error']], [], []],
-    'add_user_partenaire' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::listUser'], [], [['text', '/api/list/user/partenaire']], [], []],
+    'add_user_partenaire' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::listUserPartenaire'], [], [['text', '/api/list/user/partenaire']], [], []],
     'affectation' => [[], ['_controller' => 'App\\Controller\\AffectationController::affectation'], [], [['text', '/api/affectation']], [], []],
     'bloquer_partenaire' => [['id'], ['_controller' => 'App\\Controller\\BloquerPartenaireController::bloquer'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/api/bloquer']], [], []],
+    'count' => [[], ['_controller' => 'App\\Controller\\CountController::compter'], [], [['text', '/api/count']], [], []],
+    'parts_envois' => [[], ['_controller' => 'App\\Controller\\CountController::recherchePartsEnvois'], [], [['text', '/api/recherche/parts/envois']], [], []],
+    'parts_retraits' => [[], ['_controller' => 'App\\Controller\\CountController::recherchePartsRetraits'], [], [['text', '/api/recherche/parts/retraits']], [], []],
+    'part_partenaire' => [[], ['_controller' => 'App\\Controller\\CountController::listerPartPartenaire'], [], [['text', '/api/list/parts']], [], []],
     'fairedepot' => [[], ['_controller' => 'App\\Controller\\DepotController::faireDepot'], [], [['text', '/api/fairedepot']], [], []],
     'status' => [['id'], ['_controller' => 'App\\Controller\\DesableUserController::status'], [], [['variable', '/', '[^/]++', 'id'], ['text', '/api/users/status']], [], []],
     'envoi' => [[], ['_controller' => 'App\\Controller\\EnvoiController::envoi'], [], [['text', '/api/transaction/envoi']], [], []],
@@ -15,6 +19,8 @@ return [
     'list_partenaire' => [[], ['_controller' => 'App\\Controller\\ListPartenaireController::showPartenaire'], [], [['text', '/api/list/partenaires']], [], []],
     'list_roles' => [[], ['_controller' => 'App\\Controller\\ListRoleController::showRole'], [], [['text', '/api/list/roles']], [], []],
     'list_users' => [[], ['_controller' => 'App\\Controller\\ListUsersController::showUser'], [], [['text', '/api/list/users']], [], []],
+    'liste_envoi' => [[], ['_controller' => 'App\\Controller\\ListeTransactionController::listeEnvoi'], [], [['text', '/api/list/envois']], [], []],
+    'liste_retrait' => [[], ['_controller' => 'App\\Controller\\ListeTransactionController::listeRetrait'], [], [['text', '/api/list/retraits']], [], []],
     'new_compte' => [[], ['_controller' => 'App\\Controller\\NewCompteController::comptePartenaireNew'], [], [['text', '/api/compte/partenaire/new']], [], []],
     'existant_compte' => [[], ['_controller' => 'App\\Controller\\NewCompteController::comptePartenaireExistant'], [], [['text', '/api/compte/partenaire/existant']], [], []],
     'retrait' => [[], ['_controller' => 'App\\Controller\\RetraitController::retrait'], [], [['text', '/api/transaction/retrait']], [], []],
@@ -77,7 +83,9 @@ return [
     'login_check' => [[], [], [], [['text', '/api/login_check']], [], []],
     'swagger_ui' => [[], ['_controller' => 'api_platform.swagger.action.ui'], [], [['text', '/docs']], [], []],
     'addUserPartenaire' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::addUser'], [], [['text', '/api/user/partenaire']], [], []],
+    'ListeUserPartenaireByAffection' => [[], ['_controller' => 'App\\Controller\\AddUserPartenaireController::listUserByaffectation'], [], [['text', '/api/list/user/partenaire/affectation']], [], []],
     'rechercheCode' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheCode'], [], [['text', '/api/recherche/code']], [], []],
     'rechercheNinea' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheNinea'], [], [['text', '/api/recherche/ninea']], [], []],
     'rechercheNumeroCompte' => [[], ['_controller' => 'App\\Controller\\RechercheController::rechercheNumeroCompte'], [], [['text', '/api/recherche/numero']], [], []],
+    'rechercheInfosCompte' => [[], ['_controller' => 'App\\Controller\\RechercheController::getInfosCompte'], [], [['text', '/api/get-infos-compte']], [], []],
 ];

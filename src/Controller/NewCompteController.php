@@ -54,14 +54,7 @@ class NewCompteController extends AbstractController
         }
         if($values){
        
-            if($values->montant < 500000){
-                $data = [
-                    'status' => 500,
-                    'message' => 'Veuillez déposer minimun 500 000 F pour un nouveau compte . '];
-        
-                return new JsonResponse($data, 500);
-            
-            }
+           
             $partenaire_existant = $partenaireRepository->findOneBy(array('ninea' => $values->ninea));
             
             
@@ -90,7 +83,7 @@ class NewCompteController extends AbstractController
                 $manager->persist($user);
     
                 #### Générer le numéro de compte #####
-    
+                
                 $compte_id = $this->getLastId() + 1 ;
                 $numCompte =str_pad($compte_id, 9 ,"0",STR_PAD_LEFT);
                 
@@ -105,7 +98,14 @@ class NewCompteController extends AbstractController
                 $manager->persist($compte);
                 
                 ##### Initiliasation du compte ####
-    
+                if($values->montant < 500000){
+                    $data = [
+                        'status' => 500,
+                        'message' => 'Veuillez déposer minimun 500 000 F pour un nouveau compte . '];
+            
+                    return new JsonResponse($data, 500);
+                
+                }
                 $depot->setCreatedAt($dateJours)
                     ->setMontant($values->montant)
                     ->setUserDepot($userCreateur)
@@ -118,9 +118,13 @@ class NewCompteController extends AbstractController
                 $compte->setSolde($NouveauSolde);
                 $manager->persist($compte);
                 $manager->flush();
-                $data = [
-                    'status' => 201,
-                    'message' => 'Le compte a été bien creé . '
+                $data [] = [
+                    'prenom' => $user->getPrenom(),
+                    'nom' => $user->getNom(),
+                    'rc' => $partenaire->getRc(),
+                    'ninea' => $partenaire->getNinea(),
+                    'createdAt' => $contrat->getCreatedAt()
+                    
                 ];
                 return new JsonResponse($data, 201);
                 
@@ -185,7 +189,16 @@ class NewCompteController extends AbstractController
                 $manager->persist($depot);
 
                 #### Mise à jour du compte #####
-
+                 
+                if($values->montant < 500000){
+                    $data = [
+                        'status' => 500,
+                        'message' => 'Veuillez déposer minimun 500 000 F pour un nouveau compte . '];
+            
+                    return new JsonResponse($data, 500);
+                
+                }
+                 
                 $NouveauSolde = ($values->montant+$compte->getSolde());
                 $compte->setSolde($NouveauSolde);
                 $manager->persist($compte);

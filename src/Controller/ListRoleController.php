@@ -29,10 +29,10 @@ class ListRoleController extends AbstractController
         $role = $userConnecte->getRole()->getLibelle();
    
     	if($role === "ROLE_SUPER_ADMIN"){
-            $liste = $rp->findBy(array("libelle" => ["ROLE_ADMIN", "ROLE_CAISSIER", "ROLE_PARTENAIRE"]));
+            $liste = $rp->findBy(array("libelle" => ["ROLE_ADMIN", "ROLE_CAISSIER"]));
            
     	}elseif($role === "ROLE_ADMIN"){
-            $liste = $rp->findBy(array("libelle" => ["ROLE_CAISSIER", "ROLE_PARTENAIRE"]));
+            $liste = $rp->findBy(array("libelle" => ["ROLE_CAISSIER"]));
            
         }elseif($role === "ROLE_PARTENAIRE"){
             $liste = $rp->findBy(array("libelle" => ["ROLE_ADMIN_PARTENAIRE", "ROLE_USER_PARTENAIRE"]));

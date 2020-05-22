@@ -18,6 +18,20 @@ class DepotRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Depot::class);
     }
+    public function findDepotByPartenaire($id)
+    {
+        return $this->getEntityManager()
+                ->createQuery('SELECT D.id, C.numCompte , D.montant, D.createdAt FROM App\Entity\Depot D,App\Entity\Compte C, App\Entity\Partenaire P WHERE C.id = D.compte AND P.id = C.partenaire AND P.id = '.$id
+        )->getResult();
+    }
+    
+    public function findAllDepot()
+    {
+        return $this->getEntityManager()
+                ->createQuery('SELECT DISTINCT D.id, C.numCompte , D.montant, D.createdAt FROM App\Entity\Depot D,App\Entity\Compte C WHERE C.id = D.compte ' 
+        )->getResult();
+    }
+}
 
     // /**
     //  * @return Depot[] Returns an array of Depot objects
@@ -47,4 +61,4 @@ class DepotRepository extends ServiceEntityRepository
         ;
     }
     */
-}
+

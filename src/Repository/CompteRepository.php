@@ -27,6 +27,13 @@ class CompteRepository extends ServiceEntityRepository
         WHERE U.role = R.id AND R.libelle IN (\'ROLE_PARTENAIRE\') AND U.partenaire = C.partenaire AND C.partenaire = P.id AND C.numCompte = '.$numCompte
         )->getResult();
     }
+    public function countByCompte() 
+    {
+        return $this->createQueryBuilder('compte')
+                    ->select('COUNT(compte)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
     // /**
     //  * @return Compte[] Returns an array of Compte objects
     //  */

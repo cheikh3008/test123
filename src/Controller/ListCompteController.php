@@ -29,18 +29,23 @@ class ListCompteController extends AbstractController
         $roleUser = $userConnecte->getRole()->getLibelle();
         $partenaire_id = $userConnecte->getPartenaire();
         
-        if($roleUser === "ROLE_PARTENAIRE" || $roleUser === "ROLE_ADMIN_PARTENAIRE" ){
-            $res = $compte->findBy(array("partenaire" => $partenaire_id));
+        if($roleUser === "ROLE_PARTENAIRE" || $roleUser === "ROLE_ADMIN_PARTENAIRE" )
+        {
+            if($partenaire_id)
+            {
+                $res = $compte->findBy(array("partenaire" => $partenaire_id));
+            }
           
-        }elseif ($roleUser === "ROLE_SUPER_ADMIN" || $roleUser === "ROLE_ADMIN") {
+        }
+        elseif ($roleUser === "ROLE_SUPER_ADMIN" || $roleUser === "ROLE_ADMIN")
+        {
             $res = $compte->findAll();
         }
-        else{
-            $data =  'Votre role de vous permet aps de lister des comptes';
+        else
+        {
+            //$data =  'Votre role de vous permet aps de lister des comptes';
                 
-        return new Response($data, 500, [
-            'Content-Type' => 'application/json'
-        ]);
+            return new Response();
         }
         $data = $serializer->serialize($res, 'json');
         
